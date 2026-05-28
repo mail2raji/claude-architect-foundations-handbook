@@ -1,0 +1,31 @@
+[book]
+title       = "Claude Certified Architect Foundations — The Hands-On Handbook"
+authors     = ["mail2raji"]
+description = "From zero to production-grade agents with Claude. Hands-on book, exam-ready, with 30+ runnable examples, 90 practice questions and 5 production capstones."
+src         = "mdbook/src"
+language    = "en"
+
+[output.html]
+default-theme         = "rust"
+preferred-dark-theme  = "navy"
+git-repository-url    = "https://github.com/mail2raji/claude-architect-foundations-handbook"
+edit-url-template     = "https://github.com/mail2raji/claude-architect-foundations-handbook/edit/main/{path}"
+copy-fonts            = true
+mathjax-support       = false
+no-section-label      = false
+
+[output.html.search]
+enable = true
+limit-results = 30
+use-boolean-and = true
+
+[output.html.fold]
+enable = true
+level  = 1
+
+[output.html.print]
+enable = true
+
+[build]
+build-dir = "mdbook/book"
+create-missing = false
