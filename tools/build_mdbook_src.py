@@ -29,17 +29,18 @@ ROOT = Path(__file__).resolve().parent.parent
 SRC = ROOT / "mdbook" / "src"
 
 # (chapter_no, source_dir, chapter_title, extras_in_order)
-# Chapter order now follows the Claude Certified Architect — Foundations exam domains.
+# Chapter order mirrors the on-disk Domain1..Domain5 folder layout so the
+# published site, the README's folder list, and the appendices all agree.
 # Each subfolder under a Domain*/ root is rendered as its own chapter so the
 # builder can keep its one-folder-per-chapter contract.
 CHAPTERS: list[tuple[str, str, str, list[str]]] = [
-    ("1", "Domain4_PromptEngineering_StructuredOutput_20pct/api_basics",          "Domain 4a \u2014 Foundations, setup & the Claude API",  ["00_foundations.md", "00_setup_notes.md", "exercises.md"]),
-    ("2", "Domain4_PromptEngineering_StructuredOutput_20pct/prompt_engineering",  "Domain 4b \u2014 Prompt engineering and evaluation",    ["exercises.md"]),
-    ("3", "Domain2_ToolDesign_MCP_18pct/tool_use",                                "Domain 2a \u2014 Tool use (function calling)",          ["exercises.md"]),
-    ("4", "Domain5_ContextMgmt_Reliability_15pct",                                "Domain 5 \u2014 Context management & retrieval (RAG)",  ["exercises.md"]),
-    ("5", "Domain2_ToolDesign_MCP_18pct/mcp",                                     "Domain 2b \u2014 Model Context Protocol (MCP)",         ["01_mcp_concepts.md", "exercises.md"]),
-    ("6", "Domain1_AgentArchitecture_27pct",                                      "Domain 1 \u2014 Agent architecture & orchestration",    ["01_workflows_vs_agents.md", "exercises.md"]),
-    ("7", "Domain3_ClaudeCode_Workflows_20pct",                                   "Domain 3 \u2014 Claude Code configuration & workflows", []),
+    ("1", "Domain1_AgentArchitecture_27pct",                                      "Domain 1 \u2014 Agent architecture & orchestration",    ["01_workflows_vs_agents.md", "exercises.md"]),
+    ("2", "Domain2_ToolDesign_MCP_18pct/tool_use",                                "Domain 2a \u2014 Tool use (function calling)",          ["exercises.md"]),
+    ("3", "Domain2_ToolDesign_MCP_18pct/mcp",                                     "Domain 2b \u2014 Model Context Protocol (MCP)",         ["01_mcp_concepts.md", "exercises.md"]),
+    ("4", "Domain3_ClaudeCode_Workflows_20pct",                                   "Domain 3 \u2014 Claude Code configuration & workflows", []),
+    ("5", "Domain4_PromptEngineering_StructuredOutput_20pct/api_basics",          "Domain 4a \u2014 Foundations, setup & the Claude API",  ["00_foundations.md", "00_setup_notes.md", "exercises.md"]),
+    ("6", "Domain4_PromptEngineering_StructuredOutput_20pct/prompt_engineering",  "Domain 4b \u2014 Prompt engineering and evaluation",    ["exercises.md"]),
+    ("7", "Domain5_ContextMgmt_Reliability_15pct",                                "Domain 5 \u2014 Context management & retrieval (RAG)",  ["exercises.md"]),
 ]
 
 # Per-domain exam_prep/ folders are aggregated into one appendix per domain.
@@ -184,17 +185,85 @@ def write_front_matter() -> tuple[str, str, str]:
 
 
 def write_intro() -> str:
-    text = (
-        "# Claude Certified Architect Foundations\n\n"
-        "## The Hands-On Handbook\n\n"
-        "*From zero to production-grade agents.*\n\n"
-        "Welcome. This site is the rendered, searchable edition of the book.\n"
-        "Use the sidebar to jump between chapters, or the magnifying-glass icon\n"
-        "in the top-left to search the whole book.\n\n"
-        "- Source repository: <https://github.com/mail2raji/claude-architect-foundations-handbook>\n"
-        "- Single-file edition: see `BOOK.md` in the repo\n"
-        "- License: MIT\n"
-    )
+    text = """<div class="hero">
+  <p class="hero-eyebrow">Claude Certified Architect &mdash; Foundations</p>
+  <h1 class="hero-title">The Hands-On Handbook</h1>
+  <p class="hero-tag">From zero to production-grade agents in five domains.</p>
+  <p class="hero-badges">
+    <a href="https://github.com/mail2raji/claude-architect-foundations-handbook/actions/workflows/pages.yml"><img alt="Build &amp; deploy" src="https://github.com/mail2raji/claude-architect-foundations-handbook/actions/workflows/pages.yml/badge.svg"></a>
+    <img alt="License: MIT" src="https://img.shields.io/badge/license-MIT-blue">
+    <img alt="Python 3.11+" src="https://img.shields.io/badge/python-3.11%2B-3776ab?logo=python&logoColor=white">
+    <img alt="Anthropic Claude" src="https://img.shields.io/badge/Anthropic-Claude-d4915d">
+  </p>
+</div>
+
+---
+
+## What you'll learn
+
+A hands-on path through every domain of the **Claude Certified Architect &mdash; Foundations** exam &mdash; with **42&nbsp;runnable Python scripts**, **per-script kid-friendly `.lab.md` guides**, **practice questions**, and **production-grade capstones**.
+
+<div class="roadmap">
+  <div class="roadmap-card"><span class="roadmap-num">1</span><strong>Agent architecture</strong><span class="roadmap-weight">27%</span></div>
+  <div class="roadmap-card"><span class="roadmap-num">2</span><strong>Tools &amp; MCP</strong><span class="roadmap-weight">18%</span></div>
+  <div class="roadmap-card"><span class="roadmap-num">3</span><strong>Claude Code</strong><span class="roadmap-weight">20%</span></div>
+  <div class="roadmap-card"><span class="roadmap-num">4</span><strong>Prompts &amp; API</strong><span class="roadmap-weight">20%</span></div>
+  <div class="roadmap-card"><span class="roadmap-num">5</span><strong>Context &amp; RAG</strong><span class="roadmap-weight">15%</span></div>
+  <div class="roadmap-card roadmap-card-end"><span class="roadmap-num">&#10003;</span><strong>Exam-ready</strong><span class="roadmap-weight">100%</span></div>
+</div>
+
+---
+
+## Chapters at a glance
+
+| # | Chapter | Exam weight | Highlights |
+|---|---------|------------|------------|
+| 1 | [Domain 1 &mdash; Agent architecture & orchestration](ch01/index.md) | **27%** | Chain / Router / Parallel / Orchestrator / Evaluator / ReAct + 3 capstones |
+| 2 | [Domain 2a &mdash; Tool use (function calling)](ch02/index.md) | (part of 18%) | Single & parallel tools, multi-turn loops, IT-triage agent |
+| 3 | [Domain 2b &mdash; Model Context Protocol (MCP)](ch03/index.md) | (part of 18%) | Build a FastMCP server, write a client, bridge MCP &harr; Claude |
+| 4 | [Domain 3 &mdash; Claude Code configuration & workflows](ch04/index.md) | **20%** | CLAUDE.md, settings, hooks, sub-agents, code-review capstone |
+| 5 | [Domain 4a &mdash; Foundations, setup & the Claude API](ch05/index.md) | (part of 20%) | First call &rarr; streaming &rarr; vision &rarr; structured output |
+| 6 | [Domain 4b &mdash; Prompt engineering & evaluation](ch06/index.md) | (part of 20%) | XML tags, few-shot, CoT, prefilling, LLM-as-judge, eval-harness capstone |
+| 7 | [Domain 5 &mdash; Context management & retrieval (RAG)](ch07/index.md) | **15%** | Chunking, embeddings, BM25 hybrid, reranking, contextual retrieval, compliance-RAG capstone |
+
+Plus seven **[Appendices A&ndash;G](appendix-a/index.md)** &mdash; one per domain &mdash; with glossaries, final checklists, advanced scenarios, and **90+ practice questions**.
+
+---
+
+## Quick start
+
+```bash
+git clone https://github.com/mail2raji/claude-architect-foundations-handbook.git
+cd claude-architect-foundations-handbook
+python -m venv .venv && source .venv/bin/activate   # on Windows: .venv\\Scripts\\activate
+pip install -r requirements.txt
+cp .env.example .env                                # then paste your ANTHROPIC_API_KEY
+python Domain1_AgentArchitecture_27pct/02_chain_workflow.py
+```
+
+Each runnable script has a sibling **`<name>.lab.md`** that explains *what* it does and *why* in plain English &mdash; aimed at someone seeing the file for the first time.
+
+---
+
+## How to use this site
+
+- **Sidebar** &mdash; jump between chapters and appendices.
+- **Magnifying glass** (top-left) &mdash; full-text search across the whole book.
+- **Pencil icon** (top-right) &mdash; edit any page on GitHub.
+- **Sun / moon icon** &mdash; light / dark theme (the navy theme is built for evenings).
+- Prefer offline? Every chapter is also available as a single **[BOOK.md](https://github.com/mail2raji/claude-architect-foundations-handbook/blob/main/BOOK.md)** file in the repo.
+
+---
+
+## About
+
+- **Author:** [@mail2raji](https://github.com/mail2raji)
+- **Source:** <https://github.com/mail2raji/claude-architect-foundations-handbook>
+- **License:** [MIT](https://github.com/mail2raji/claude-architect-foundations-handbook/blob/main/LICENSE)
+- **Contributions** of typo fixes, extra exercises, or fresh capstones are warmly welcomed &mdash; see [CONTRIBUTING.md](https://github.com/mail2raji/claude-architect-foundations-handbook/blob/main/CONTRIBUTING.md).
+
+> *Built with [mdBook](https://rust-lang.github.io/mdBook/) &middot; deployed by GitHub Actions on every push to `main`.*
+"""
     (SRC / "introduction.md").write_text(text, encoding="utf-8")
     return "introduction.md"
 

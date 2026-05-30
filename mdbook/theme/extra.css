@@ -1,0 +1,104 @@
+/* === Decorative styles for the landing page === */
+
+/* --- Hero block --- */
+.hero {
+  margin: 1.25rem 0 1.75rem;
+  padding: 2.25rem 1.75rem 2rem;
+  border-radius: 14px;
+  text-align: center;
+  background: linear-gradient(135deg, #1b2a4e 0%, #2a4d8f 45%, #d4915d 100%);
+  color: #fff;
+  box-shadow: 0 8px 28px rgba(0, 0, 0, 0.18);
+}
+.hero-eyebrow {
+  margin: 0;
+  font-size: 0.85rem;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  opacity: 0.85;
+}
+.hero-title {
+  margin: 0.35rem 0 0.5rem;
+  font-size: 2.5rem;
+  font-weight: 800;
+  line-height: 1.1;
+  color: #fff !important;
+}
+.hero-tag {
+  margin: 0 0 1rem;
+  font-size: 1.1rem;
+  opacity: 0.95;
+}
+.hero-badges {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+  justify-content: center;
+  margin: 0;
+}
+.hero-badges img {
+  height: 22px;
+  vertical-align: middle;
+}
+
+/* --- Roadmap cards (the "1 → 2 → 3 → 4 → 5 → ✓" strip) --- */
+.roadmap {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: 0.6rem;
+  margin: 1.5rem 0 2rem;
+}
+.roadmap-card {
+  flex: 1 1 130px;
+  min-width: 130px;
+  padding: 1rem 0.75rem;
+  border-radius: 10px;
+  background: #1f2a44;
+  color: #fff;
+  text-align: center;
+  border: 1px solid #5fb3ff;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+  transition: transform 0.15s ease, box-shadow 0.15s ease;
+}
+.roadmap-card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 6px 14px rgba(0, 0, 0, 0.2);
+}
+.roadmap-card-end {
+  background: #1e8449;
+  border-color: #27ae60;
+}
+.roadmap-num {
+  display: block;
+  font-size: 1.5rem;
+  font-weight: 800;
+  margin-bottom: 0.35rem;
+  color: #ffd591;
+}
+.roadmap-card-end .roadmap-num {
+  color: #fff;
+}
+.roadmap-card strong {
+  display: block;
+  font-size: 0.95rem;
+  line-height: 1.25;
+  margin-bottom: 0.35rem;
+  color: #fff;
+}
+.roadmap-weight {
+  display: block;
+  font-size: 0.8rem;
+  opacity: 0.85;
+}
+
+/* --- Make first-page tables a touch nicer --- */
+.chapter li.chapter-item a {
+  border-radius: 4px;
+}
+
+/* --- Light theme tweaks (rust/light) --- */
+.light .roadmap-card,
+.rust .roadmap-card {
+  background: #2c3e50;
+}

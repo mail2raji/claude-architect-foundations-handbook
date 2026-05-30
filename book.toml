@@ -13,6 +13,7 @@ edit-url-template     = "https://github.com/mail2raji/claude-architect-foundatio
 copy-fonts            = true
 mathjax-support       = false
 no-section-label      = false
+additional-css        = ["mdbook/theme/extra.css"]
 
 [output.html.search]
 enable = true
