@@ -6,7 +6,7 @@ src         = "mdbook/src"
 language    = "en"
 
 [output.html]
-default-theme         = "rust"
+default-theme         = "navy"
 preferred-dark-theme  = "navy"
 git-repository-url    = "https://github.com/mail2raji/claude-architect-foundations-handbook"
 edit-url-template     = "https://github.com/mail2raji/claude-architect-foundations-handbook/edit/main/{path}"
