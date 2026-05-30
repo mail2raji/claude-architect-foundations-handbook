@@ -17,34 +17,26 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parent.parent
 
 # Each chapter == one Domain*/ folder, mirroring the repo exactly.
-# Schema: (chapter_no, parent_dir, chapter_title, parent_extras, sub_sections)
-#   sub_sections is a list of (sub_path_under_parent, [extras]) tuples that get
-#   rendered inline so Domains 2 and 4 stay a single chapter even though they
-#   have two sub-folders on disk.
-CHAPTERS: list[tuple[str, str, str, list[str], list[tuple[str, list[str]]]]] = [
+# Schema: (chapter_no, parent_dir, chapter_title, named_subs)
+#   named_subs -> ordered list of sub-folder names rendered as inline sections.
+# Everything else (loose .md, exercises.md, .py + .lab.md pairs, capstones/)
+# is auto-discovered by render_folder().
+CHAPTERS: list[tuple[str, str, str, list[str]]] = [
     ("1", "Domain1_AgentArchitecture_27pct",
         "Domain 1 \u2014 Agent Architecture & Orchestration (27%)",
-        ["01_workflows_vs_agents.md", "exercises.md"], []),
+        []),
     ("2", "Domain2_ToolDesign_MCP_18pct",
         "Domain 2 \u2014 Tool Design & MCP Integration (18%)",
-        [],
-        [
-            ("tool_use", ["exercises.md"]),
-            ("mcp",      ["01_mcp_concepts.md", "exercises.md"]),
-        ]),
+        ["tool_use", "mcp"]),
     ("3", "Domain3_ClaudeCode_Workflows_20pct",
         "Domain 3 \u2014 Claude Code Configuration & Workflows (20%)",
-        [], []),
+        []),
     ("4", "Domain4_PromptEngineering_StructuredOutput_20pct",
         "Domain 4 \u2014 Prompt Engineering & Structured Output (20%)",
-        [],
-        [
-            ("api_basics",          ["00_foundations.md", "00_setup_notes.md", "exercises.md"]),
-            ("prompt_engineering",  ["exercises.md"]),
-        ]),
+        ["api_basics", "prompt_engineering"]),
     ("5", "Domain5_ContextMgmt_Reliability_15pct",
         "Domain 5 \u2014 Context Management & Retrieval / RAG (15%)",
-        ["exercises.md"], []),
+        []),
 ]
 
 # One appendix per Domain. Each appendix can pull from multiple exam_prep/ paths.
@@ -114,43 +106,91 @@ def list_code_files(dir_path: Path) -> list[str]:
     return sorted(p.name for p in dir_path.glob("*.py"))
 
 
-def _emit_folder(parts: list[str], src_dir: str, extras: list[str],
-                 heading_shift: int = 1, with_code: bool = True,
-                 code_heading: str = "Code samples in this chapter") -> None:
+SPECIAL_MD = {"README.md", "exercises.md"}
+
+
+def list_loose_md(folder: Path) -> list[str]:
+    return sorted(
+        p.name for p in folder.iterdir()
+        if p.is_file()
+        and p.suffix == ".md"
+        and p.name not in SPECIAL_MD
+        and not p.name.endswith(".lab.md")
+    )
+
+
+def code_table(folder: Path, src_dir: str) -> list[str]:
+    pys = sorted(p.name for p in folder.glob("*.py"))
+    if not pys:
+        return []
+    out = [
+        "| # | Script | Plain-English lab guide |",
+        "|---|--------|--------------------------|",
+    ]
+    for i, py in enumerate(pys, 1):
+        lab = py[:-3] + ".lab.md"
+        lab_cell = f"[`{lab}`]({src_dir}/{lab})" if (folder / lab).exists() else "&mdash;"
+        out.append(f"| {i} | [`{py}`]({src_dir}/{py}) | {lab_cell} |")
+    return out
+
+
+def render_folder(parts: list[str], src_dir: str, heading_shift: int,
+                  named_subs: list[str] | None = None) -> None:
     folder = ROOT / src_dir
+    if not folder.exists():
+        return
+    named_subs = named_subs or []
+
     readme = read(folder / "README.md")
     if readme:
         parts.append(shift_headings(readme, heading_shift))
-    for extra in extras:
-        content = read(folder / extra)
+
+    for fname in list_loose_md(folder):
+        content = read(folder / fname)
         if not content:
             continue
-        parts.append(f"\n\n{'#' * (heading_shift + 1)} {Path(extra).stem.replace('_', ' ').title()}\n")
-        parts.append(shift_headings(content, heading_shift))
-    if with_code:
-        code_files = list_code_files(folder)
-        if code_files:
-            parts.append(f"\n\n{'#' * (heading_shift + 1)} {code_heading}\n")
-            for cf in code_files:
-                parts.append(f"- [`{cf}`]({src_dir}/{cf})")
+        pretty = Path(fname).stem.replace("_", " ").title()
+        parts.append(f"\n\n{'#' * (heading_shift + 1)} {pretty}\n")
+        parts.append(shift_headings(content, heading_shift + 1))
+
+    ex = read(folder / "exercises.md")
+    if ex:
+        parts.append(f"\n\n{'#' * (heading_shift + 1)} Exercises\n")
+        parts.append(shift_headings(ex, heading_shift + 1))
+
+    table = code_table(folder, src_dir)
+    if table:
+        parts.append(f"\n\n{'#' * (heading_shift + 1)} Code samples & lab guides\n")
+        parts.extend(table)
+
+    for sub in named_subs:
+        sub_path = folder / sub
+        if not sub_path.exists() or not sub_path.is_dir():
+            continue
+        sub_src = f"{src_dir}/{sub}"
+        parts.append(f"\n\n---\n\n{'#' * (heading_shift + 1)} Section &mdash; `{sub}/`\n")
+        parts.append(f"> Source folder: [`{sub_src}/`]({sub_src}/README.md)\n")
+        render_folder(parts, sub_src, heading_shift + 1, named_subs=[])
+
+    capstones = folder / "capstones"
+    if capstones.exists() and capstones.is_dir():
+        cap_src = f"{src_dir}/capstones"
+        parts.append(f"\n\n---\n\n{'#' * (heading_shift + 1)} Capstones\n")
+        parts.append(
+            f"Production-grade projects in [`{cap_src}/`]({cap_src}/). "
+            "Each capstone is a runnable script with a sibling plain-English lab guide.\n"
+        )
+        ctable = code_table(capstones, cap_src)
+        if ctable:
+            parts.extend(ctable)
 
 
 def build_chapter(no: str, parent_dir: str, title: str,
-                  parent_extras: list[str],
-                  sub_sections: list[tuple[str, list[str]]]) -> str:
+                  named_subs: list[str]) -> str:
     section_anchor = f"chapter-{no}-{slugify(title)}"
     parts: list[str] = [f"\n\n<a id='{section_anchor}'></a>\n\n# Chapter {no}. {title}\n"]
     parts.append(f"> Source folder: [`{parent_dir}/`]({parent_dir}/README.md)\n")
-
-    _emit_folder(parts, parent_dir, parent_extras, heading_shift=1, with_code=True,
-                 code_heading="Code samples in this chapter")
-
-    for sub_rel, sub_extras in sub_sections:
-        sub_src = f"{parent_dir}/{sub_rel}"
-        parts.append(f"\n\n---\n\n## {sub_rel}/ &mdash; sub-section\n")
-        parts.append(f"> Source folder: [`{sub_src}/`]({sub_src}/README.md)\n")
-        _emit_folder(parts, sub_src, sub_extras, heading_shift=2, with_code=True,
-                     code_heading=f"Code samples in `{sub_rel}/`")
+    render_folder(parts, parent_dir, heading_shift=1, named_subs=named_subs)
     return "\n".join(parts)
 
 
@@ -186,7 +226,7 @@ def build_toc() -> str:
     lines.append("- [Preface](#preface)")
     lines.append("- [How to use this handbook](#how-to-use-this-handbook)")
     lines.append("\n## Chapters\n")
-    for no, _, title, _, _ in CHAPTERS:
+    for no, _, title, _ in CHAPTERS:
         anchor = f"chapter-{no}-{slugify(title)}"
         lines.append(f"- [Chapter {no}. {title}](#{anchor})")
     lines.append("\n## Appendices\n")
@@ -209,8 +249,8 @@ def main() -> int:
     parts.append(build_toc())
     parts.append("\n\n---\n")
 
-    for no, parent_dir, title, parent_extras, sub_sections in CHAPTERS:
-        parts.append(build_chapter(no, parent_dir, title, parent_extras, sub_sections))
+    for no, parent_dir, title, named_subs in CHAPTERS:
+        parts.append(build_chapter(no, parent_dir, title, named_subs))
         parts.append("\n\n---\n")
 
     for letter, sources, title in APPENDICES:

@@ -30,38 +30,32 @@ ROOT = Path(__file__).resolve().parent.parent
 SRC = ROOT / "mdbook" / "src"
 
 # Each chapter == one Domain*/ folder, mirroring the repo exactly.
-# Schema: (chapter_no, parent_dir, chapter_title, parent_extras, sub_sections)
-#   parent_extras   -> ordered .md files (relative to parent_dir) appended after
-#                      the parent README.
-#   sub_sections    -> list of (sub_dir_relative_to_parent, [extras]) tuples that
-#                      get rendered inline as H2 sub-sections, so multi-folder
-#                      Domains (2 and 4) still show as one chapter on the site.
-CHAPTERS: list[tuple[str, str, str, list[str], list[tuple[str, list[str]]]]] = [
+# Schema: (chapter_no, parent_dir, chapter_title, named_subs)
+#   named_subs -> ordered list of sub-folder names to render as inline sections
+#                 (anything else under the folder is auto-discovered).
+# Everything else inside the Domain folder is auto-included by render_folder():
+#   - README.md                       (inlined first)
+#   - every other top-level .md       (inlined alphabetically, except *.lab.md)
+#   - exercises.md                    (rendered as its own "Exercises" section)
+#   - every top-level .py             (linked in a "Code samples & lab guides" table,
+#                                      paired with its *.lab.md if present)
+#   - capstones/                      (rendered as a "Capstones" section)
+#   - exam_prep/                      (skipped here, surfaced via appendices)
+CHAPTERS: list[tuple[str, str, str, list[str]]] = [
     ("1", "Domain1_AgentArchitecture_27pct",
         "Domain 1 \u2014 Agent Architecture & Orchestration (27%)",
-        ["01_workflows_vs_agents.md", "exercises.md"],
         []),
     ("2", "Domain2_ToolDesign_MCP_18pct",
         "Domain 2 \u2014 Tool Design & MCP Integration (18%)",
-        [],
-        [
-            ("tool_use", ["exercises.md"]),
-            ("mcp",      ["01_mcp_concepts.md", "exercises.md"]),
-        ]),
+        ["tool_use", "mcp"]),
     ("3", "Domain3_ClaudeCode_Workflows_20pct",
         "Domain 3 \u2014 Claude Code Configuration & Workflows (20%)",
-        [],
         []),
     ("4", "Domain4_PromptEngineering_StructuredOutput_20pct",
         "Domain 4 \u2014 Prompt Engineering & Structured Output (20%)",
-        [],
-        [
-            ("api_basics",          ["00_foundations.md", "00_setup_notes.md", "exercises.md"]),
-            ("prompt_engineering",  ["exercises.md"]),
-        ]),
+        ["api_basics", "prompt_engineering"]),
     ("5", "Domain5_ContextMgmt_Reliability_15pct",
         "Domain 5 \u2014 Context Management & Retrieval / RAG (15%)",
-        ["exercises.md"],
         []),
 ]
 
@@ -148,32 +142,114 @@ def rewrite_links(text: str, chapter_subdir: str) -> str:
     return re.sub(r"\[([^\]]+)\]\(([^)]+)\)", repl, text)
 
 
-def _append_folder(parts: list[str], src_dir: str, extras: list[str],
-                   heading_shift: int = 1, code_heading: str = "Code samples in this chapter") -> None:
-    """Append README + extras + code-sample list of a folder, with link rewriting."""
+REPO_BLOB = "https://github.com/mail2raji/claude-architect-foundations-handbook/blob/main"
+REPO_TREE = "https://github.com/mail2raji/claude-architect-foundations-handbook/tree/main"
+
+# File names that get *special* treatment instead of being inlined as
+# generic "loose .md" extras (README is the section preamble; exercises is
+# rendered last as its own "Exercises" section; lab guides are only listed
+# in the code table, never inlined).
+SPECIAL_MD = {"README.md", "exercises.md"}
+
+
+def list_loose_md(folder: Path) -> list[str]:
+    """Top-level .md files to inline as 'extras' (alphabetical)."""
+    return sorted(
+        p.name for p in folder.iterdir()
+        if p.is_file()
+        and p.suffix == ".md"
+        and p.name not in SPECIAL_MD
+        and not p.name.endswith(".lab.md")
+    )
+
+
+def code_samples_table(folder: Path, src_dir: str) -> list[str]:
+    """Pair every .py with its .lab.md (if present) in a 3-column table."""
+    pys = sorted(p.name for p in folder.glob("*.py"))
+    if not pys:
+        return []
+    base = f"{REPO_BLOB}/{src_dir}"
+    out = [
+        "| # | Script | Plain-English lab guide |",
+        "|---|--------|--------------------------|",
+    ]
+    for i, py in enumerate(pys, 1):
+        lab = py[:-3] + ".lab.md"
+        lab_cell = f"[`{lab}`]({base}/{lab})" if (folder / lab).exists() else "&mdash;"
+        out.append(f"| {i} | [`{py}`]({base}/{py}) | {lab_cell} |")
+    return out
+
+
+def render_folder(parts: list[str], src_dir: str, heading_shift: int,
+                  named_subs: list[str] | None = None) -> None:
+    """Inline a Domain folder's README + every loose .md + exercises +
+    a code-samples table + named sub-sections + capstones/.
+
+    `heading_shift` shifts every heading in inlined documents so they nest
+    correctly under the chapter H1 (shift=1 means H1->H2, H2->H3, etc.).
+    """
     folder = ROOT / src_dir
+    if not folder.exists():
+        return
+    named_subs = named_subs or []
+
+    # 1. Section preamble = README.md
     readme = read(folder / "README.md")
     if readme:
         parts.append(shift_headings(rewrite_links(readme, src_dir), heading_shift))
 
-    for extra in extras:
-        content = read(folder / extra)
+    # 2. Loose top-level .md files (alphabetical), each as its own subsection
+    for fname in list_loose_md(folder):
+        content = read(folder / fname)
         if not content:
             continue
-        parts.append(f"\n\n{'#' * (heading_shift + 1)} {Path(extra).stem.replace('_', ' ').title()}\n")
-        parts.append(shift_headings(rewrite_links(content, src_dir), heading_shift))
+        pretty = Path(fname).stem.replace("_", " ").title()
+        parts.append(f"\n\n{'#' * (heading_shift + 1)} {pretty}\n")
+        parts.append(shift_headings(rewrite_links(content, src_dir), heading_shift + 1))
 
-    code = sorted(p.name for p in folder.glob("*.py"))
-    if code:
-        parts.append(f"\n\n{'#' * (heading_shift + 1)} {code_heading}\n")
-        base = f"https://github.com/mail2raji/claude-architect-foundations-handbook/blob/main/{src_dir}"
-        for cf in code:
-            parts.append(f"- [`{cf}`]({base}/{cf})")
+    # 3. Exercises (rendered last in the narrative chunk)
+    ex = read(folder / "exercises.md")
+    if ex:
+        parts.append(f"\n\n{'#' * (heading_shift + 1)} Exercises\n")
+        parts.append(shift_headings(rewrite_links(ex, src_dir), heading_shift + 1))
+
+    # 4. Code samples & lab guides at this level
+    table = code_samples_table(folder, src_dir)
+    if table:
+        parts.append(f"\n\n{'#' * (heading_shift + 1)} Code samples & lab guides\n")
+        parts.extend(table)
+
+    # 5. Named sub-sections (rendered in the given order)
+    for sub in named_subs:
+        sub_path = folder / sub
+        if not sub_path.exists() or not sub_path.is_dir():
+            continue
+        sub_src = f"{src_dir}/{sub}"
+        parts.append(f"\n\n---\n\n{'#' * (heading_shift + 1)} Section &mdash; `{sub}/`\n")
+        parts.append(
+            f"*Source folder on GitHub:* "
+            f"[`{sub_src}/`]({REPO_TREE}/{sub_src})\n"
+        )
+        # Sub-sections never have their own named_subs (avoid deep recursion).
+        render_folder(parts, sub_src, heading_shift + 1, named_subs=[])
+
+    # 6. Capstones (auto-discovered if a capstones/ folder exists)
+    capstones = folder / "capstones"
+    if capstones.exists() and capstones.is_dir():
+        cap_src = f"{src_dir}/capstones"
+        parts.append(f"\n\n---\n\n{'#' * (heading_shift + 1)} Capstones\n")
+        parts.append(
+            f"Production-grade projects in "
+            f"[`{cap_src}/`]({REPO_TREE}/{cap_src}). "
+            "Each capstone is a runnable script with a sibling plain-English lab guide.\n"
+        )
+        ctable = code_samples_table(capstones, cap_src)
+        if ctable:
+            parts.extend(ctable)
 
 
 def write_chapter(no: str, parent_dir: str, title: str,
-                  parent_extras: list[str],
-                  sub_sections: list[tuple[str, list[str]]]) -> str:
+                  named_subs: list[str]) -> str:
     """Returns the filename relative to mdbook/src for SUMMARY.md."""
     out_dir = SRC / f"ch{no.zfill(2)}"
     out_dir.mkdir(parents=True, exist_ok=True)
@@ -181,23 +257,9 @@ def write_chapter(no: str, parent_dir: str, title: str,
     parts: list[str] = [
         f"# Chapter {no}. {title}\n",
         f"*Source folder on GitHub:* "
-        f"[`{parent_dir}/`](https://github.com/mail2raji/claude-architect-foundations-handbook/tree/main/{parent_dir})\n",
+        f"[`{parent_dir}/`]({REPO_TREE}/{parent_dir})\n",
     ]
-
-    # Parent README + extras + parent-level code samples (if any).
-    _append_folder(parts, parent_dir, parent_extras, heading_shift=1,
-                   code_heading="Code samples in this chapter")
-
-    # Each sub-folder becomes an H2 sub-section with the folder name as title.
-    for sub_rel, sub_extras in sub_sections:
-        sub_src = f"{parent_dir}/{sub_rel}"
-        parts.append(f"\n\n---\n\n## {sub_rel}/  &mdash; sub-section\n")
-        parts.append(
-            f"*Source folder on GitHub:* "
-            f"[`{sub_src}/`](https://github.com/mail2raji/claude-architect-foundations-handbook/tree/main/{sub_src})\n"
-        )
-        _append_folder(parts, sub_src, sub_extras, heading_shift=2,
-                       code_heading=f"Code samples in `{sub_rel}/`")
+    render_folder(parts, parent_dir, heading_shift=1, named_subs=named_subs)
 
     (out_dir / "index.md").write_text("\n".join(parts), encoding="utf-8")
     return f"ch{no.zfill(2)}/index.md"
@@ -356,8 +418,8 @@ def main() -> int:
     SRC.mkdir(parents=True, exist_ok=True)
 
     chapter_paths: list[tuple[str, str, str]] = []
-    for no, parent_dir, title, parent_extras, sub_sections in CHAPTERS:
-        p = write_chapter(no, parent_dir, title, parent_extras, sub_sections)
+    for no, parent_dir, title, named_subs in CHAPTERS:
+        p = write_chapter(no, parent_dir, title, named_subs)
         chapter_paths.append((no, title, p))
 
     appendix_paths: list[tuple[str, str, str]] = []
