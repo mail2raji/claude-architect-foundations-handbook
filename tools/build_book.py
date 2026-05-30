@@ -21,13 +21,13 @@ ROOT = Path(__file__).resolve().parent.parent
 # Each subfolder under a Domain*/ root is rendered as its own chapter so the
 # builder can keep its one-folder-per-chapter contract.
 CHAPTERS: list[tuple[str, str, str, list[str], bool]] = [
-    ("1", "Domain1_AgentArchitecture_27pct",                                      "Domain 1 \u2014 Agent architecture & orchestration",   ["01_workflows_vs_agents.md", "exercises.md"],     True),
-    ("2", "Domain2_ToolDesign_MCP_18pct/tool_use",                                "Domain 2a \u2014 Tool use (function calling)",         ["exercises.md"],                                  True),
-    ("3", "Domain2_ToolDesign_MCP_18pct/mcp",                                     "Domain 2b \u2014 Model Context Protocol (MCP)",        ["01_mcp_concepts.md", "exercises.md"],            True),
-    ("4", "Domain3_ClaudeCode_Workflows_20pct",                                   "Domain 3 \u2014 Claude Code configuration & workflows", [],                                               False),
-    ("5", "Domain4_PromptEngineering_StructuredOutput_20pct/api_basics",          "Domain 4a \u2014 Foundations, setup & the Claude API", ["00_foundations.md", "00_setup_notes.md", "exercises.md"], True),
-    ("6", "Domain4_PromptEngineering_StructuredOutput_20pct/prompt_engineering",  "Domain 4b \u2014 Prompt engineering and evaluation",   ["exercises.md"],                                  True),
-    ("7", "Domain5_ContextMgmt_Reliability_15pct",                                "Domain 5 \u2014 Context management & retrieval (RAG)", ["exercises.md"],                                  True),
+    ("1", "Domain1_AgentArchitecture_27pct",                                      "Domain 1 \u2014 Agent Architecture & Orchestration (27%)",   ["01_workflows_vs_agents.md", "exercises.md"],     True),
+    ("2", "Domain2_ToolDesign_MCP_18pct/tool_use",                                "Domain 2a \u2014 Tool Use / Function Calling",               ["exercises.md"],                                  True),
+    ("3", "Domain2_ToolDesign_MCP_18pct/mcp",                                     "Domain 2b \u2014 Model Context Protocol (MCP) (18%)",        ["01_mcp_concepts.md", "exercises.md"],            True),
+    ("4", "Domain3_ClaudeCode_Workflows_20pct",                                   "Domain 3 \u2014 Claude Code Configuration & Workflows (20%)", [],                                               False),
+    ("5", "Domain4_PromptEngineering_StructuredOutput_20pct/api_basics",          "Domain 4a \u2014 Foundations, Setup & the Claude API",       ["00_foundations.md", "00_setup_notes.md", "exercises.md"], True),
+    ("6", "Domain4_PromptEngineering_StructuredOutput_20pct/prompt_engineering",  "Domain 4b \u2014 Prompt Engineering & Evaluation (20%)",     ["exercises.md"],                                  True),
+    ("7", "Domain5_ContextMgmt_Reliability_15pct",                                "Domain 5 \u2014 Context Management & Retrieval / RAG (15%)", ["exercises.md"],                                  True),
 ]
 
 # Each domain now carries its OWN exam_prep/ subfolder, so the old single

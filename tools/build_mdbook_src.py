@@ -33,15 +33,16 @@ SRC = ROOT / "mdbook" / "src"
 # Chapter order mirrors the on-disk Domain1..Domain5 folder layout so the
 # published site, the README's folder list, and the appendices all agree.
 # Each subfolder under a Domain*/ root is rendered as its own chapter so the
-# builder can keep its one-folder-per-chapter contract.
+# builder can keep its one-folder-per-chapter contract. The chapter H1 also
+# echoes the exact folder name so naming is unambiguous on the site.
 CHAPTERS: list[tuple[str, str, str, list[str]]] = [
-    ("1", "Domain1_AgentArchitecture_27pct",                                      "Domain 1 \u2014 Agent architecture & orchestration",    ["01_workflows_vs_agents.md", "exercises.md"]),
-    ("2", "Domain2_ToolDesign_MCP_18pct/tool_use",                                "Domain 2a \u2014 Tool use (function calling)",          ["exercises.md"]),
-    ("3", "Domain2_ToolDesign_MCP_18pct/mcp",                                     "Domain 2b \u2014 Model Context Protocol (MCP)",         ["01_mcp_concepts.md", "exercises.md"]),
-    ("4", "Domain3_ClaudeCode_Workflows_20pct",                                   "Domain 3 \u2014 Claude Code configuration & workflows", []),
-    ("5", "Domain4_PromptEngineering_StructuredOutput_20pct/api_basics",          "Domain 4a \u2014 Foundations, setup & the Claude API",  ["00_foundations.md", "00_setup_notes.md", "exercises.md"]),
-    ("6", "Domain4_PromptEngineering_StructuredOutput_20pct/prompt_engineering",  "Domain 4b \u2014 Prompt engineering and evaluation",    ["exercises.md"]),
-    ("7", "Domain5_ContextMgmt_Reliability_15pct",                                "Domain 5 \u2014 Context management & retrieval (RAG)",  ["exercises.md"]),
+    ("1", "Domain1_AgentArchitecture_27pct",                                      "Domain 1 \u2014 Agent Architecture & Orchestration (27%)",   ["01_workflows_vs_agents.md", "exercises.md"]),
+    ("2", "Domain2_ToolDesign_MCP_18pct/tool_use",                                "Domain 2a \u2014 Tool Use / Function Calling",               ["exercises.md"]),
+    ("3", "Domain2_ToolDesign_MCP_18pct/mcp",                                     "Domain 2b \u2014 Model Context Protocol (MCP) (18%)",        ["01_mcp_concepts.md", "exercises.md"]),
+    ("4", "Domain3_ClaudeCode_Workflows_20pct",                                   "Domain 3 \u2014 Claude Code Configuration & Workflows (20%)", []),
+    ("5", "Domain4_PromptEngineering_StructuredOutput_20pct/api_basics",          "Domain 4a \u2014 Foundations, Setup & the Claude API",       ["00_foundations.md", "00_setup_notes.md", "exercises.md"]),
+    ("6", "Domain4_PromptEngineering_StructuredOutput_20pct/prompt_engineering",  "Domain 4b \u2014 Prompt Engineering & Evaluation (20%)",     ["exercises.md"]),
+    ("7", "Domain5_ContextMgmt_Reliability_15pct",                                "Domain 5 \u2014 Context Management & Retrieval / RAG (15%)", ["exercises.md"]),
 ]
 
 # Per-domain exam_prep/ folders are aggregated into one appendix per domain.
@@ -122,7 +123,11 @@ def write_chapter(no: str, src_dir: str, title: str, extras: list[str]) -> str:
     out_dir = SRC / f"ch{no.zfill(2)}"
     out_dir.mkdir(parents=True, exist_ok=True)
 
-    parts: list[str] = [f"# Chapter {no}. {title}\n"]
+    parts: list[str] = [
+        f"# Chapter {no}. {title}\n",
+        f"*Source folder on GitHub:* "
+        f"[`{src_dir}/`](https://github.com/mail2raji/claude-architect-foundations-handbook/tree/main/{src_dir})\n",
+    ]
     readme = read(folder / "README.md")
     if readme:
         parts.append(shift_headings(rewrite_links(readme, src_dir), 1))
@@ -151,7 +156,11 @@ def write_appendix(letter: str, src_dir: str, title: str, files: list[str]) -> s
     out_dir = SRC / f"appendix-{letter.lower()}"
     out_dir.mkdir(parents=True, exist_ok=True)
 
-    parts: list[str] = [f"# Appendix {letter}. {title}\n"]
+    parts: list[str] = [
+        f"# Appendix {letter}. {title}\n",
+        f"*Source folder on GitHub:* "
+        f"[`{src_dir}/`](https://github.com/mail2raji/claude-architect-foundations-handbook/tree/main/{src_dir})\n",
+    ]
     readme = read(folder / "README.md")
     if readme:
         parts.append(shift_headings(rewrite_links(readme, src_dir), 1))
@@ -219,15 +228,17 @@ A hands-on path through every domain of the **Claude Certified Architect &mdash;
 
 ## Chapters at a glance
 
-| # | Chapter | Exam weight | Highlights |
-|---|---------|------------|------------|
-| 1 | [Domain 1 &mdash; Agent architecture & orchestration](ch01/index.md) | **27%** | Chain / Router / Parallel / Orchestrator / Evaluator / ReAct + 3 capstones |
-| 2 | [Domain 2a &mdash; Tool use (function calling)](ch02/index.md) | (part of 18%) | Single & parallel tools, multi-turn loops, IT-triage agent |
-| 3 | [Domain 2b &mdash; Model Context Protocol (MCP)](ch03/index.md) | (part of 18%) | Build a FastMCP server, write a client, bridge MCP &harr; Claude |
-| 4 | [Domain 3 &mdash; Claude Code configuration & workflows](ch04/index.md) | **20%** | CLAUDE.md, settings, hooks, sub-agents, code-review capstone |
-| 5 | [Domain 4a &mdash; Foundations, setup & the Claude API](ch05/index.md) | (part of 20%) | First call &rarr; streaming &rarr; vision &rarr; structured output |
-| 6 | [Domain 4b &mdash; Prompt engineering & evaluation](ch06/index.md) | (part of 20%) | XML tags, few-shot, CoT, prefilling, LLM-as-judge, eval-harness capstone |
-| 7 | [Domain 5 &mdash; Context management & retrieval (RAG)](ch07/index.md) | **15%** | Chunking, embeddings, BM25 hybrid, reranking, contextual retrieval, compliance-RAG capstone |
+Every chapter on this site is generated from the matching folder in the repo. Click the **`folder/`** badge on any chapter page to jump straight to that folder on GitHub.
+
+| # | Chapter | Folder | Exam weight |
+|---|---------|--------|------------|
+| 1 | [Domain 1 &mdash; Agent Architecture & Orchestration](ch01/index.md) | `Domain1_AgentArchitecture_27pct/` | **27%** |
+| 2 | [Domain 2a &mdash; Tool Use / Function Calling](ch02/index.md) | `Domain2_ToolDesign_MCP_18pct/tool_use/` | _part of 18%_ |
+| 3 | [Domain 2b &mdash; Model Context Protocol (MCP)](ch03/index.md) | `Domain2_ToolDesign_MCP_18pct/mcp/` | _part of 18%_ |
+| 4 | [Domain 3 &mdash; Claude Code Configuration & Workflows](ch04/index.md) | `Domain3_ClaudeCode_Workflows_20pct/` | **20%** |
+| 5 | [Domain 4a &mdash; Foundations, Setup & the Claude API](ch05/index.md) | `Domain4_PromptEngineering_StructuredOutput_20pct/api_basics/` | _part of 20%_ |
+| 6 | [Domain 4b &mdash; Prompt Engineering & Evaluation](ch06/index.md) | `Domain4_PromptEngineering_StructuredOutput_20pct/prompt_engineering/` | _part of 20%_ |
+| 7 | [Domain 5 &mdash; Context Management & Retrieval (RAG)](ch07/index.md) | `Domain5_ContextMgmt_Reliability_15pct/` | **15%** |
 
 Plus seven **[Appendices A&ndash;G](appendix-a/index.md)** &mdash; one per domain &mdash; with glossaries, final checklists, advanced scenarios, and **90+ practice questions**.
 

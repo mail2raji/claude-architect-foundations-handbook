@@ -168,13 +168,13 @@ If you run every code sample once, the total Anthropic spend is typically under 
 
 ## Chapters
 
-- [Chapter 1. Domain 1 — Agent architecture & orchestration](#chapter-1-domain-1-agent-architecture-orchestration)
-- [Chapter 2. Domain 2a — Tool use (function calling)](#chapter-2-domain-2a-tool-use-function-calling)
-- [Chapter 3. Domain 2b — Model Context Protocol (MCP)](#chapter-3-domain-2b-model-context-protocol-mcp)
-- [Chapter 4. Domain 3 — Claude Code configuration & workflows](#chapter-4-domain-3-claude-code-configuration-workflows)
-- [Chapter 5. Domain 4a — Foundations, setup & the Claude API](#chapter-5-domain-4a-foundations-setup-the-claude-api)
-- [Chapter 6. Domain 4b — Prompt engineering and evaluation](#chapter-6-domain-4b-prompt-engineering-and-evaluation)
-- [Chapter 7. Domain 5 — Context management & retrieval (RAG)](#chapter-7-domain-5-context-management-retrieval-rag)
+- [Chapter 1. Domain 1 — Agent Architecture & Orchestration (27%)](#chapter-1-domain-1-agent-architecture-orchestration-27)
+- [Chapter 2. Domain 2a — Tool Use / Function Calling](#chapter-2-domain-2a-tool-use-function-calling)
+- [Chapter 3. Domain 2b — Model Context Protocol (MCP) (18%)](#chapter-3-domain-2b-model-context-protocol-mcp-18)
+- [Chapter 4. Domain 3 — Claude Code Configuration & Workflows (20%)](#chapter-4-domain-3-claude-code-configuration-workflows-20)
+- [Chapter 5. Domain 4a — Foundations, Setup & the Claude API](#chapter-5-domain-4a-foundations-setup-the-claude-api)
+- [Chapter 6. Domain 4b — Prompt Engineering & Evaluation (20%)](#chapter-6-domain-4b-prompt-engineering-evaluation-20)
+- [Chapter 7. Domain 5 — Context Management & Retrieval / RAG (15%)](#chapter-7-domain-5-context-management-retrieval-rag-15)
 
 ## Appendices
 
@@ -191,9 +191,9 @@ If you run every code sample once, the total Anthropic spend is typically under 
 
 
 
-<a id='chapter-1-domain-1-agent-architecture-orchestration'></a>
+<a id='chapter-1-domain-1-agent-architecture-orchestration-27'></a>
 
-# Chapter 1. Domain 1 — Agent architecture & orchestration
+# Chapter 1. Domain 1 — Agent Architecture & Orchestration (27%)
 
 > Source folder: [`Domain1_AgentArchitecture_27pct/`](Domain1_AgentArchitecture_27pct/README.md)
 
@@ -415,7 +415,7 @@ Common pattern: cheap classifier (Haiku) → main reasoner (Sonnet) → final ju
 
 <a id='chapter-2-domain-2a-tool-use-function-calling'></a>
 
-# Chapter 2. Domain 2a — Tool use (function calling)
+# Chapter 2. Domain 2a — Tool Use / Function Calling
 
 > Source folder: [`Domain2_ToolDesign_MCP_18pct/tool_use/`](Domain2_ToolDesign_MCP_18pct/tool_use/README.md)
 
@@ -587,9 +587,9 @@ Next → [Domain 2b: Model Context Protocol (MCP)](../mcp/README.md)
 
 
 
-<a id='chapter-3-domain-2b-model-context-protocol-mcp'></a>
+<a id='chapter-3-domain-2b-model-context-protocol-mcp-18'></a>
 
-# Chapter 3. Domain 2b — Model Context Protocol (MCP)
+# Chapter 3. Domain 2b — Model Context Protocol (MCP) (18%)
 
 > Source folder: [`Domain2_ToolDesign_MCP_18pct/mcp/`](Domain2_ToolDesign_MCP_18pct/mcp/README.md)
 
@@ -848,9 +848,9 @@ Each server announces what it supports in `initialize`:
 
 
 
-<a id='chapter-4-domain-3-claude-code-configuration-workflows'></a>
+<a id='chapter-4-domain-3-claude-code-configuration-workflows-20'></a>
 
-# Chapter 4. Domain 3 — Claude Code configuration & workflows
+# Chapter 4. Domain 3 — Claude Code Configuration & Workflows (20%)
 
 > Source folder: [`Domain3_ClaudeCode_Workflows_20pct/`](Domain3_ClaudeCode_Workflows_20pct/README.md)
 
@@ -950,7 +950,7 @@ Next → [Domain 4a: Foundations, Setup & the Claude API](../Domain4_PromptEngin
 
 <a id='chapter-5-domain-4a-foundations-setup-the-claude-api'></a>
 
-# Chapter 5. Domain 4a — Foundations, setup & the Claude API
+# Chapter 5. Domain 4a — Foundations, Setup & the Claude API
 
 > Source folder: [`Domain4_PromptEngineering_StructuredOutput_20pct/api_basics/`](Domain4_PromptEngineering_StructuredOutput_20pct/api_basics/README.md)
 
@@ -1257,9 +1257,9 @@ Try each. The hint columns are intentionally light — peek only if stuck.
 
 
 
-<a id='chapter-6-domain-4b-prompt-engineering-and-evaluation'></a>
+<a id='chapter-6-domain-4b-prompt-engineering-evaluation-20'></a>
 
-# Chapter 6. Domain 4b — Prompt engineering and evaluation
+# Chapter 6. Domain 4b — Prompt Engineering & Evaluation (20%)
 
 > Source folder: [`Domain4_PromptEngineering_StructuredOutput_20pct/prompt_engineering/`](Domain4_PromptEngineering_StructuredOutput_20pct/prompt_engineering/README.md)
 
@@ -1443,9 +1443,9 @@ Next → [Domain 5: Context Management & Retrieval (RAG)](../../Domain5_ContextM
 
 
 
-<a id='chapter-7-domain-5-context-management-retrieval-rag'></a>
+<a id='chapter-7-domain-5-context-management-retrieval-rag-15'></a>
 
-# Chapter 7. Domain 5 — Context management & retrieval (RAG)
+# Chapter 7. Domain 5 — Context Management & Retrieval / RAG (15%)
 
 > Source folder: [`Domain5_ContextMgmt_Reliability_15pct/`](Domain5_ContextMgmt_Reliability_15pct/README.md)
 
