@@ -46,11 +46,7 @@
   ];
 
   // ---------- 3. Build the top nav ----------
-  var navLinks = [
-    { label: "\ud83c\udfe0 Home",       href: root + "introduction.html" },
-    { label: "\ud83d\udcd8 Preface",    href: root + "preface.html" },
-    { label: "\ud83e\udded How to use", href: root + "how-to-use.html" }
-  ];
+  var navLinks = [];
   DOMAINS.forEach(function (d) {
     navLinks.push({
       label: d.label,

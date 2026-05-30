@@ -282,16 +282,11 @@ Each runnable script has a sibling **`<name>.lab.md`** that explains *what* it d
     return "introduction.md"
 
 
-def write_summary(intro: str, fm: tuple[str, str, str],
-                  chapter_paths: list[tuple[str, str, str]],
+def write_summary(chapter_paths: list[tuple[str, str, str]],
                   appendix_paths: list[tuple[str, str, str]]) -> None:
-    title_md, preface_md, howto_md = fm
-    lines: list[str] = ["# Summary\n", f"[Introduction]({intro})\n"]
-    lines.append("# Front matter\n")
-    lines.append(f"- [Title page]({title_md})")
-    lines.append(f"- [Preface]({preface_md})")
-    lines.append(f"- [How to use this handbook]({howto_md})")
-    lines.append("\n# Chapters\n")
+    """SUMMARY.md starts directly at the chapters \u2014 no Introduction / Front matter."""
+    lines: list[str] = ["# Summary\n"]
+    lines.append("# Chapters\n")
     for no, title, path in chapter_paths:
         lines.append(f"- [Chapter {no}. {title}]({path})")
     lines.append("\n# Appendices\n")
@@ -305,9 +300,6 @@ def main() -> int:
         shutil.rmtree(SRC)
     SRC.mkdir(parents=True, exist_ok=True)
 
-    intro = write_intro()
-    fm = write_front_matter()
-
     chapter_paths: list[tuple[str, str, str]] = []
     for no, src_dir, title, extras in CHAPTERS:
         p = write_chapter(no, src_dir, title, extras)
@@ -318,7 +310,7 @@ def main() -> int:
         p = write_appendix(letter, src_dir, title, files)
         appendix_paths.append((letter, title, p))
 
-    write_summary(intro, fm, chapter_paths, appendix_paths)
+    write_summary(chapter_paths, appendix_paths)
 
     files = sum(1 for _ in SRC.rglob("*.md"))
     print(f"Built mdBook source: {SRC}  ({files} markdown files)")
