@@ -5,19 +5,33 @@
   if (document.getElementById("ccaf-topnav")) return;
 
   // ---------- 1. Compute relative path to site root ----------
+  // mdBook exposes a global `path_to_root` variable (set in head template) on
+  // every page. It's already a correct relative path like "" or "../" or
+  // "../../". Prefer it over any heuristic. Fall back to deriving from the
+  // current URL only as a last resort.
   function pathToRoot() {
+    try {
+      if (typeof path_to_root === "string") return path_to_root || "./";
+    } catch (_) { /* not defined */ }
+    if (typeof window !== "undefined" && typeof window.path_to_root === "string") {
+      return window.path_to_root || "./";
+    }
     var attr = document.documentElement.getAttribute("data-path-to-root");
     if (attr) return attr;
-    var base = document.querySelector("base");
-    if (base && base.href) {
-      try {
-        var u = new URL(base.href);
-        var here = new URL(window.location.href);
-        var diff = here.pathname.replace(u.pathname, "").split("/").length - 1;
-        return diff > 0 ? new Array(diff + 1).join("../") : "./";
-      } catch (_) { return "./"; }
-    }
-    return "./";
+    // Derive from URL: assume site root is the GitHub Pages project path
+    // (everything up to and including the repo name). Count remaining path
+    // segments (excluding trailing index.html or empty) to determine depth.
+    try {
+      var parts = window.location.pathname.split("/").filter(function (s) { return s.length > 0; });
+      // For project pages the first segment is the repo name; drop it.
+      // For user/org sites we'd want depth from root, but this site is a
+      // project page so dropping one segment is correct.
+      if (parts.length > 0) parts.shift();
+      // If the last segment looks like a file, drop it.
+      if (parts.length > 0 && /\.[a-zA-Z0-9]+$/.test(parts[parts.length - 1])) parts.pop();
+      var depth = parts.length;
+      return depth > 0 ? new Array(depth + 1).join("../") : "./";
+    } catch (_) { return "./"; }
   }
 
   var root = pathToRoot();
