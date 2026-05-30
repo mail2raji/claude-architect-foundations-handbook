@@ -58,7 +58,7 @@ ANTHROPIC_API_KEY=sk-ant-xxxxxxxxxxxxxxxxxxxx
 ## 6. Verify
 
 ```powershell
-python Phase0_Setup\01_first_call.py
+python Domain4_PromptEngineering_StructuredOutput_20pct\api_basics\00_setup_first_call.py
 ```
 
 You should see a Claude reply. If not, see Troubleshooting below.

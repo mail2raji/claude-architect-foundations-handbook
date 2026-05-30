@@ -21,22 +21,34 @@ ROOT = Path(__file__).resolve().parent.parent
 # Each subfolder under a Domain*/ root is rendered as its own chapter so the
 # builder can keep its one-folder-per-chapter contract.
 CHAPTERS: list[tuple[str, str, str, list[str], bool]] = [
-    ("1", "Phase0_Setup",                                                         "Setup and your first API call",                       [],                                                False),
-    ("2", "Phase1_Foundations",                                                   "Claude and GenAI foundations",                        [],                                                False),
-    ("3", "Domain4_PromptEngineering_StructuredOutput_20pct/api_basics",          "Domain 4a \u2014 Working with the Claude API",       ["exercises.md"],                                  True),
-    ("4", "Domain4_PromptEngineering_StructuredOutput_20pct/prompt_engineering",  "Domain 4b \u2014 Prompt engineering and evaluation", ["exercises.md"],                                  True),
-    ("5", "Domain2_ToolDesign_MCP_18pct/tool_use",                                "Domain 2a \u2014 Tool use (function calling)",       ["exercises.md"],                                  True),
-    ("6", "Domain5_ContextMgmt_Reliability_15pct",                                "Domain 5 \u2014 Context management & retrieval (RAG)", ["exercises.md"],                                True),
-    ("7", "Domain2_ToolDesign_MCP_18pct/mcp",                                     "Domain 2b \u2014 Model Context Protocol (MCP)",      ["01_mcp_concepts.md", "exercises.md"],            True),
-    ("8", "Domain1_AgentArchitecture_27pct",                                      "Domain 1 \u2014 Agent architecture & orchestration", ["01_workflows_vs_agents.md", "exercises.md"],     True),
-    ("9", "Domain3_ClaudeCode_Workflows_20pct",                                   "Domain 3 \u2014 Claude Code configuration & workflows", [],                                            False),
+    ("1", "Domain4_PromptEngineering_StructuredOutput_20pct/api_basics",          "Domain 4a \u2014 Foundations, setup & the Claude API", ["00_foundations.md", "00_setup_notes.md", "exercises.md"], True),
+    ("2", "Domain4_PromptEngineering_StructuredOutput_20pct/prompt_engineering",  "Domain 4b \u2014 Prompt engineering and evaluation",   ["exercises.md"],                                  True),
+    ("3", "Domain2_ToolDesign_MCP_18pct/tool_use",                                "Domain 2a \u2014 Tool use (function calling)",         ["exercises.md"],                                  True),
+    ("4", "Domain5_ContextMgmt_Reliability_15pct",                                "Domain 5 \u2014 Context management & retrieval (RAG)", ["exercises.md"],                                  True),
+    ("5", "Domain2_ToolDesign_MCP_18pct/mcp",                                     "Domain 2b \u2014 Model Context Protocol (MCP)",        ["01_mcp_concepts.md", "exercises.md"],            True),
+    ("6", "Domain1_AgentArchitecture_27pct",                                      "Domain 1 \u2014 Agent architecture & orchestration",   ["01_workflows_vs_agents.md", "exercises.md"],     True),
+    ("7", "Domain3_ClaudeCode_Workflows_20pct",                                   "Domain 3 \u2014 Claude Code configuration & workflows", [],                                               False),
 ]
 
+# Each domain now carries its OWN exam_prep/ subfolder, so the old single
+# 'Exam preparation' appendix is gone. We keep one appendix that aggregates
+# the per-domain exam-prep material so a reader who wants a single 'study
+# everything' file still has one.
 APPENDICES: list[tuple[str, str, str, list[str]]] = [
-    ("A", "Phase9_ExamPrep", "Exam preparation",
-        ["glossary.md", "final_checklist.md", "practice_questions.md", "practice_questions_setC.md", "answers_phase1.md"]),
-    ("B", "Phase10_Advanced_Capstone", "Advanced capstone",
-        ["patterns_decision_tree.md", "gotchas.md", "production_cheatsheet.md", "advanced_exercises.md", "harder_exercises_by_phase.md"]),
+    ("A", "Domain1_AgentArchitecture_27pct/exam_prep", "Exam prep \u2014 Domain 1",
+        ["glossary.md", "final_checklist.md", "practice_questions.md", "practice_questions_setC.md", "exercises_harder.md", "advanced_scenarios.md"]),
+    ("B", "Domain2_ToolDesign_MCP_18pct/tool_use/exam_prep", "Exam prep \u2014 Domain 2a (tools)",
+        ["glossary.md", "final_checklist.md", "practice_questions.md", "practice_questions_setC.md", "exercises_harder.md", "advanced_scenarios.md"]),
+    ("C", "Domain2_ToolDesign_MCP_18pct/mcp/exam_prep", "Exam prep \u2014 Domain 2b (MCP)",
+        ["glossary.md", "final_checklist.md", "practice_questions.md", "practice_questions_setC.md", "exercises_harder.md", "advanced_scenarios.md"]),
+    ("D", "Domain3_ClaudeCode_Workflows_20pct/exam_prep", "Exam prep \u2014 Domain 3",
+        ["glossary.md", "final_checklist.md", "practice_questions.md", "exercises_harder.md", "advanced_scenarios.md"]),
+    ("E", "Domain4_PromptEngineering_StructuredOutput_20pct/api_basics/exam_prep", "Exam prep \u2014 Domain 4a (API)",
+        ["glossary.md", "final_checklist.md", "practice_questions.md", "practice_questions_setC.md", "exercises_harder.md", "advanced_scenarios.md", "answers_foundations_exercise.md"]),
+    ("F", "Domain4_PromptEngineering_StructuredOutput_20pct/prompt_engineering/exam_prep", "Exam prep \u2014 Domain 4b (prompts)",
+        ["glossary.md", "final_checklist.md", "practice_questions.md", "practice_questions_setC.md", "exercises_harder.md", "advanced_scenarios.md"]),
+    ("G", "Domain5_ContextMgmt_Reliability_15pct/exam_prep", "Exam prep \u2014 Domain 5",
+        ["glossary.md", "final_checklist.md", "practice_questions.md", "practice_questions_setC.md", "exercises_harder.md", "advanced_scenarios.md"]),
 ]
 
 

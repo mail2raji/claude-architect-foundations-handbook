@@ -85,4 +85,4 @@ No runnable code in this phase — those tools require a VM (Computer Use) or a 
 - Both are **agents under the hood** — every Phase 7 safety knob applies.
 - Computer Use is **vision-based** — it relies on screenshots.
 
-Next → [Phase 9: Exam Prep](../Phase9_ExamPrep/README.md)
+Next → drill the exam-prep material per domain. Start with the heaviest: [Domain1_AgentArchitecture_27pct/exam_prep/](../Domain1_AgentArchitecture_27pct/exam_prep/).

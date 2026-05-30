@@ -8,4 +8,4 @@
 2. Run `python 01_first_call.py`.
 3. You should see Claude reply with a short message.
 
-That's it. If it works, move to [Phase 1](../Phase1_Foundations/README.md).
+That's it. If it works, move on to [00_foundations.md](00_foundations.md) for Claude & GenAI foundations, then the numbered scripts 01–07 in this folder.

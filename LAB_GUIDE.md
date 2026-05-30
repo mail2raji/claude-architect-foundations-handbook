@@ -124,7 +124,7 @@ Use [Domain1_AgentArchitecture_27pct/08_agent_loop_with_escalation.py](Domain1_A
 |---|---|
 | Fixed pipeline (chain) | [Domain1_AgentArchitecture_27pct/02_chain_workflow.py](Domain1_AgentArchitecture_27pct/02_chain_workflow.py) |
 | Dynamic adaptive | [Domain1_AgentArchitecture_27pct/05_orchestrator_workers.py](Domain1_AgentArchitecture_27pct/05_orchestrator_workers.py) |
-| Multi-pass code review | [Phase10_Advanced_Capstone/04_code_review_agent.py](Phase10_Advanced_Capstone/04_code_review_agent.py) |
+| Multi-pass code review | [Domain3_ClaudeCode_Workflows_20pct/capstones/04_code_review_agent.py](Domain3_ClaudeCode_Workflows_20pct/capstones/04_code_review_agent.py) |
 
 Lab: take the multi-pass review and add an **integration pass** that runs after all per-file passes (exam Q12 / Practice Q27 — fixes attention dilution).
 
@@ -457,13 +457,13 @@ If the team ships `.claude/skills/commit/SKILL.md`, place YOUR personal version 
 | Structured output via tool | [Domain4_PromptEngineering_StructuredOutput_20pct/api_basics/05_structured_output.py](Domain4_PromptEngineering_StructuredOutput_20pct/api_basics/05_structured_output.py) |
 | `stop_reason` reference | [Domain4_PromptEngineering_StructuredOutput_20pct/api_basics/07_stop_reasons_and_errors.py](Domain4_PromptEngineering_StructuredOutput_20pct/api_basics/07_stop_reasons_and_errors.py) |
 | Evaluator-optimizer (multi-pass quality) | [Domain1_AgentArchitecture_27pct/06_evaluator_optimizer.py](Domain1_AgentArchitecture_27pct/06_evaluator_optimizer.py) |
-| Compliance RAG extractor | [Phase10_Advanced_Capstone/02_compliance_rag_production.py](Phase10_Advanced_Capstone/02_compliance_rag_production.py) |
-| Code review (multi-pass) | [Phase10_Advanced_Capstone/04_code_review_agent.py](Phase10_Advanced_Capstone/04_code_review_agent.py) |
-| Eval harness | [Phase10_Advanced_Capstone/05_eval_harness.py](Phase10_Advanced_Capstone/05_eval_harness.py) |
+| Compliance RAG extractor | [Domain5_ContextMgmt_Reliability_15pct/capstones/02_compliance_rag_production.py](Domain5_ContextMgmt_Reliability_15pct/capstones/02_compliance_rag_production.py) |
+| Code review (multi-pass) | [Domain3_ClaudeCode_Workflows_20pct/capstones/04_code_review_agent.py](Domain3_ClaudeCode_Workflows_20pct/capstones/04_code_review_agent.py) |
+| Eval harness | [Domain4_PromptEngineering_StructuredOutput_20pct/capstones/05_eval_harness.py](Domain4_PromptEngineering_StructuredOutput_20pct/capstones/05_eval_harness.py) |
 
 ## Lab 4.1 — Explicit criteria for code review
 
-Take the vague review prompt in [Phase10_Advanced_Capstone/04_code_review_agent.py](Phase10_Advanced_Capstone/04_code_review_agent.py). Tighten it like this:
+Take the vague review prompt in [Domain3_ClaudeCode_Workflows_20pct/capstones/04_code_review_agent.py](Domain3_ClaudeCode_Workflows_20pct/capstones/04_code_review_agent.py). Tighten it like this:
 
 ```
 Flag a comment ONLY if:
@@ -522,7 +522,7 @@ Build a small extractor that:
 3. On `ValidationError`, retries up to N=2 with: original document + previous (wrong) output + the exact validation message.
 4. Stops retrying if the missing info is clearly absent — don't loop forever.
 
-Skeleton ([Phase10_Advanced_Capstone/02_compliance_rag_production.py](Phase10_Advanced_Capstone/02_compliance_rag_production.py)) has the shape.
+Skeleton ([Domain5_ContextMgmt_Reliability_15pct/capstones/02_compliance_rag_production.py](Domain5_ContextMgmt_Reliability_15pct/capstones/02_compliance_rag_production.py)) has the shape.
 
 ## Lab 4.5 — Self-correction for arithmetic
 
@@ -539,7 +539,7 @@ The model returns both totals; you set `conflict_detected = abs(stated-calc) > 0
 
 ## Lab 4.6 — Multi-instance review (independent reviewer)
 
-In [Phase10_Advanced_Capstone/04_code_review_agent.py](Phase10_Advanced_Capstone/04_code_review_agent.py):
+In [Domain3_ClaudeCode_Workflows_20pct/capstones/04_code_review_agent.py](Domain3_ClaudeCode_Workflows_20pct/capstones/04_code_review_agent.py):
 
 1. Pass 1 — instance A generates code.
 2. Pass 2 — instance B reviews WITHOUT seeing A's reasoning (just the final diff). This avoids confirmation bias (Practice Q17).
@@ -570,7 +570,7 @@ batch = client.messages.batches.create(requests=[
 
 ## Lab 4.9 — Eval harness
 
-Run [Phase10_Advanced_Capstone/05_eval_harness.py](Phase10_Advanced_Capstone/05_eval_harness.py). Add 50 golden cases; track per-prompt accuracy, token counts, latency, and `stop_reason` distribution. Alert on >2% accuracy drop or >20% token drift after any prompt or model-snapshot change.
+Run [Domain4_PromptEngineering_StructuredOutput_20pct/capstones/05_eval_harness.py](Domain4_PromptEngineering_StructuredOutput_20pct/capstones/05_eval_harness.py). Add 50 golden cases; track per-prompt accuracy, token counts, latency, and `stop_reason` distribution. Alert on >2% accuracy drop or >20% token drift after any prompt or model-snapshot change.
 
 ## Domain 4 self-check
 
@@ -615,12 +615,12 @@ Run [Phase10_Advanced_Capstone/05_eval_harness.py](Phase10_Advanced_Capstone/05_
 | Contextual retrieval | [Domain5_ContextMgmt_Reliability_15pct/05_contextual_retrieval.py](Domain5_ContextMgmt_Reliability_15pct/05_contextual_retrieval.py) |
 | KB QA mini-project | [Domain5_ContextMgmt_Reliability_15pct/mini_project_kb_qa.py](Domain5_ContextMgmt_Reliability_15pct/mini_project_kb_qa.py) |
 | Escalation + interceptor | [Domain1_AgentArchitecture_27pct/08_agent_loop_with_escalation.py](Domain1_AgentArchitecture_27pct/08_agent_loop_with_escalation.py) |
-| Multi-tier support | [Phase10_Advanced_Capstone/03_support_agent_multi_tier.py](Phase10_Advanced_Capstone/03_support_agent_multi_tier.py) |
-| SOC triage pipeline (graceful degradation) | [Phase10_Advanced_Capstone/01_soc_triage_pipeline.py](Phase10_Advanced_Capstone/01_soc_triage_pipeline.py) |
+| Multi-tier support | [Domain1_AgentArchitecture_27pct/capstones/03_support_agent_multi_tier.py](Domain1_AgentArchitecture_27pct/capstones/03_support_agent_multi_tier.py) |
+| SOC triage pipeline (graceful degradation) | [Domain1_AgentArchitecture_27pct/capstones/01_soc_triage_pipeline.py](Domain1_AgentArchitecture_27pct/capstones/01_soc_triage_pipeline.py) |
 
 ## Lab 5.1 — Extract a persistent "case facts" block
 
-Modify [Phase10_Advanced_Capstone/03_support_agent_multi_tier.py](Phase10_Advanced_Capstone/03_support_agent_multi_tier.py):
+Modify [Domain1_AgentArchitecture_27pct/capstones/03_support_agent_multi_tier.py](Domain1_AgentArchitecture_27pct/capstones/03_support_agent_multi_tier.py):
 
 1. After each tool call, parse out transactional facts (customer id, order id, amount, request).
 2. Maintain a `CASE_FACTS` dict in code (not in conversation history).
@@ -710,7 +710,7 @@ Subagent returns three categories of outcomes; the coordinator must treat them d
 
 ## Lab 5.8 — Escalation calibration
 
-In [Phase10_Advanced_Capstone/03_support_agent_multi_tier.py](Phase10_Advanced_Capstone/03_support_agent_multi_tier.py), encode these explicit triggers in the system prompt with one few-shot per trigger:
+In [Domain1_AgentArchitecture_27pct/capstones/03_support_agent_multi_tier.py](Domain1_AgentArchitecture_27pct/capstones/03_support_agent_multi_tier.py), encode these explicit triggers in the system prompt with one few-shot per trigger:
 
 - "get me a manager" → immediate escalation (Practice Q49).
 - Policy silent on request (e.g., competitor price match) → escalate for human judgment (Practice Q50).
@@ -761,7 +761,7 @@ Do NOT arbitrarily pick one (Practice Q1, Chapter 12.2).
 
 ## Lab 5.11 — Stratified sampling for extraction QA
 
-In [Phase10_Advanced_Capstone/05_eval_harness.py](Phase10_Advanced_Capstone/05_eval_harness.py), break the eval by **document type** and **field**, not just aggregate accuracy. Demonstrate a case where overall accuracy is 97% but one doc type sits at 60% — that's the bucket to fix.
+In [Domain4_PromptEngineering_StructuredOutput_20pct/capstones/05_eval_harness.py](Domain4_PromptEngineering_StructuredOutput_20pct/capstones/05_eval_harness.py), break the eval by **document type** and **field**, not just aggregate accuracy. Demonstrate a case where overall accuracy is 97% but one doc type sits at 60% — that's the bucket to fix.
 
 ## Domain 5 self-check
 
@@ -792,7 +792,7 @@ Replicate each end-to-end exam scenario by composing the labs above:
 
 # 7. Pre-exam checklist
 
-Already in this repo: [Phase9_ExamPrep/final_checklist.md](Phase9_ExamPrep/final_checklist.md), [Phase9_ExamPrep/glossary.md](Phase9_ExamPrep/glossary.md), [Phase9_ExamPrep/practice_questions.md](Phase9_ExamPrep/practice_questions.md), [Phase9_ExamPrep/practice_questions_setC.md](Phase9_ExamPrep/practice_questions_setC.md).
+Already in this repo: each domain has its own `exam_prep/` folder with `final_checklist.md`, `glossary.md`, `practice_questions.md`, `practice_questions_setC.md`, `exercises_harder.md`, and `advanced_scenarios.md`. Start with the heaviest: [Domain1_AgentArchitecture_27pct/exam_prep/](Domain1_AgentArchitecture_27pct/exam_prep/).
 
 Add these last-mile drills:
 

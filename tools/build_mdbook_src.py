@@ -2,10 +2,11 @@
 Build the mdBook source tree under `mdbook/src/` from the canonical chapter
 folders.
 
-The source folders are now organised by Claude Certified Architect — Foundations
+The source folders are organised by Claude Certified Architect — Foundations
 exam domain (Domain1_AgentArchitecture_27pct/, Domain2_ToolDesign_MCP_18pct/, ...).
-Pre-domain (Phase0_Setup, Phase1_Foundations) and post-domain (Phase9_ExamPrep,
-Phase10_Advanced_Capstone) folders keep their original Phase names.
+Pre-domain foundations and post-domain exam-prep content have been absorbed
+into the relevant domain folders so the source tree is one-to-one with the
+five exam domains.
 
 The source folders stay as-is so readers browsing GitHub see the layout they
 expect. This script is the bridge: it copies the right chapter content into
@@ -32,22 +33,31 @@ SRC = ROOT / "mdbook" / "src"
 # Each subfolder under a Domain*/ root is rendered as its own chapter so the
 # builder can keep its one-folder-per-chapter contract.
 CHAPTERS: list[tuple[str, str, str, list[str]]] = [
-    ("1", "Phase0_Setup",                                                         "Setup and your first API call",                          []),
-    ("2", "Phase1_Foundations",                                                   "Claude and GenAI foundations",                           []),
-    ("3", "Domain4_PromptEngineering_StructuredOutput_20pct/api_basics",          "Domain 4a \u2014 Working with the Claude API",          ["exercises.md"]),
-    ("4", "Domain4_PromptEngineering_StructuredOutput_20pct/prompt_engineering",  "Domain 4b \u2014 Prompt engineering and evaluation",    ["exercises.md"]),
-    ("5", "Domain2_ToolDesign_MCP_18pct/tool_use",                                "Domain 2a \u2014 Tool use (function calling)",          ["exercises.md"]),
-    ("6", "Domain5_ContextMgmt_Reliability_15pct",                                "Domain 5 \u2014 Context management & retrieval (RAG)",  ["exercises.md"]),
-    ("7", "Domain2_ToolDesign_MCP_18pct/mcp",                                     "Domain 2b \u2014 Model Context Protocol (MCP)",         ["01_mcp_concepts.md", "exercises.md"]),
-    ("8", "Domain1_AgentArchitecture_27pct",                                      "Domain 1 \u2014 Agent architecture & orchestration",    ["01_workflows_vs_agents.md", "exercises.md"]),
-    ("9", "Domain3_ClaudeCode_Workflows_20pct",                                   "Domain 3 \u2014 Claude Code configuration & workflows", []),
+    ("1", "Domain4_PromptEngineering_StructuredOutput_20pct/api_basics",          "Domain 4a \u2014 Foundations, setup & the Claude API",  ["00_foundations.md", "00_setup_notes.md", "exercises.md"]),
+    ("2", "Domain4_PromptEngineering_StructuredOutput_20pct/prompt_engineering",  "Domain 4b \u2014 Prompt engineering and evaluation",    ["exercises.md"]),
+    ("3", "Domain2_ToolDesign_MCP_18pct/tool_use",                                "Domain 2a \u2014 Tool use (function calling)",          ["exercises.md"]),
+    ("4", "Domain5_ContextMgmt_Reliability_15pct",                                "Domain 5 \u2014 Context management & retrieval (RAG)",  ["exercises.md"]),
+    ("5", "Domain2_ToolDesign_MCP_18pct/mcp",                                     "Domain 2b \u2014 Model Context Protocol (MCP)",         ["01_mcp_concepts.md", "exercises.md"]),
+    ("6", "Domain1_AgentArchitecture_27pct",                                      "Domain 1 \u2014 Agent architecture & orchestration",    ["01_workflows_vs_agents.md", "exercises.md"]),
+    ("7", "Domain3_ClaudeCode_Workflows_20pct",                                   "Domain 3 \u2014 Claude Code configuration & workflows", []),
 ]
 
+# Per-domain exam_prep/ folders are aggregated into one appendix per domain.
 APPENDICES: list[tuple[str, str, str, list[str]]] = [
-    ("A", "Phase9_ExamPrep", "Exam preparation",
-        ["glossary.md", "final_checklist.md", "practice_questions.md", "practice_questions_setC.md", "answers_phase1.md"]),
-    ("B", "Phase10_Advanced_Capstone", "Advanced capstone",
-        ["patterns_decision_tree.md", "gotchas.md", "production_cheatsheet.md", "advanced_exercises.md", "harder_exercises_by_phase.md"]),
+    ("A", "Domain1_AgentArchitecture_27pct/exam_prep", "Exam prep \u2014 Domain 1",
+        ["glossary.md", "final_checklist.md", "practice_questions.md", "practice_questions_setC.md", "exercises_harder.md", "advanced_scenarios.md"]),
+    ("B", "Domain2_ToolDesign_MCP_18pct/tool_use/exam_prep", "Exam prep \u2014 Domain 2a (tools)",
+        ["glossary.md", "final_checklist.md", "practice_questions.md", "practice_questions_setC.md", "exercises_harder.md", "advanced_scenarios.md"]),
+    ("C", "Domain2_ToolDesign_MCP_18pct/mcp/exam_prep", "Exam prep \u2014 Domain 2b (MCP)",
+        ["glossary.md", "final_checklist.md", "practice_questions.md", "practice_questions_setC.md", "exercises_harder.md", "advanced_scenarios.md"]),
+    ("D", "Domain3_ClaudeCode_Workflows_20pct/exam_prep", "Exam prep \u2014 Domain 3",
+        ["glossary.md", "final_checklist.md", "practice_questions.md", "exercises_harder.md", "advanced_scenarios.md"]),
+    ("E", "Domain4_PromptEngineering_StructuredOutput_20pct/api_basics/exam_prep", "Exam prep \u2014 Domain 4a (API)",
+        ["glossary.md", "final_checklist.md", "practice_questions.md", "practice_questions_setC.md", "exercises_harder.md", "advanced_scenarios.md", "answers_foundations_exercise.md"]),
+    ("F", "Domain4_PromptEngineering_StructuredOutput_20pct/prompt_engineering/exam_prep", "Exam prep \u2014 Domain 4b (prompts)",
+        ["glossary.md", "final_checklist.md", "practice_questions.md", "practice_questions_setC.md", "exercises_harder.md", "advanced_scenarios.md"]),
+    ("G", "Domain5_ContextMgmt_Reliability_15pct/exam_prep", "Exam prep \u2014 Domain 5",
+        ["glossary.md", "final_checklist.md", "practice_questions.md", "practice_questions_setC.md", "exercises_harder.md", "advanced_scenarios.md"]),
 ]
 
 
@@ -76,7 +86,7 @@ def shift_headings(text: str, levels: int) -> str:
 def rewrite_links(text: str, chapter_subdir: str) -> str:
     """
     Inside a chapter README, links like `01_first_message.py` or
-    `(../Phase9_ExamPrep/README.md)` won't resolve under mdbook/src.
+    `(../Domain1_AgentArchitecture_27pct/README.md)` won't resolve under mdbook/src.
     We turn them into absolute GitHub URLs so users can still click through.
     """
     base = "https://github.com/mail2raji/claude-architect-foundations-handbook/blob/main"
