@@ -25,24 +25,21 @@
 
   // ---------- 2. Chapter <-> folder map (one source of truth) ----------
   var CHAPTERS = [
-    { id: "ch01", num: "1",  short: "Domain 1 \u00b7 Agents",       weight: "27%", folder: "Domain1_AgentArchitecture_27pct"                                          },
-    { id: "ch02", num: "2a", short: "Domain 2a \u00b7 Tool Use",    weight: "",    folder: "Domain2_ToolDesign_MCP_18pct/tool_use"                                    },
-    { id: "ch03", num: "2b", short: "Domain 2b \u00b7 MCP",         weight: "18%", folder: "Domain2_ToolDesign_MCP_18pct/mcp"                                         },
-    { id: "ch04", num: "3",  short: "Domain 3 \u00b7 Claude Code",  weight: "20%", folder: "Domain3_ClaudeCode_Workflows_20pct"                                       },
-    { id: "ch05", num: "4a", short: "Domain 4a \u00b7 API",         weight: "",    folder: "Domain4_PromptEngineering_StructuredOutput_20pct/api_basics"              },
-    { id: "ch06", num: "4b", short: "Domain 4b \u00b7 Prompts",     weight: "20%", folder: "Domain4_PromptEngineering_StructuredOutput_20pct/prompt_engineering"      },
-    { id: "ch07", num: "5",  short: "Domain 5 \u00b7 RAG",          weight: "15%", folder: "Domain5_ContextMgmt_Reliability_15pct"                                    }
+    { id: "ch01", num: "1", short: "Domain 1 \u00b7 Agents",      weight: "27%", folder: "Domain1_AgentArchitecture_27pct"                  },
+    { id: "ch02", num: "2", short: "Domain 2 \u00b7 Tools + MCP", weight: "18%", folder: "Domain2_ToolDesign_MCP_18pct"                     },
+    { id: "ch03", num: "3", short: "Domain 3 \u00b7 Claude Code", weight: "20%", folder: "Domain3_ClaudeCode_Workflows_20pct"               },
+    { id: "ch04", num: "4", short: "Domain 4 \u00b7 Prompts/API", weight: "20%", folder: "Domain4_PromptEngineering_StructuredOutput_20pct" },
+    { id: "ch05", num: "5", short: "Domain 5 \u00b7 RAG",         weight: "15%", folder: "Domain5_ContextMgmt_Reliability_15pct"            }
   ];
 
-  // Top-bar groups one entry per cert domain (Domain 1..5). Domains 2 and 4 each
-  // contain two chapters on the site; the top-bar button opens the first one and
-  // the sidebar exposes the second (sub-chapter).
+  // Top-bar groups one entry per cert domain (Domain 1..5). Each button maps
+  // to the matching chapter (1:1 with the on-disk Domain*/ folder).
   var DOMAINS = [
     { label: "Domain 1", chapterId: "ch01", title: "Agent Architecture & Orchestration (27%)" },
-    { label: "Domain 2", chapterId: "ch02", title: "Tool Design & MCP (18%) \u2014 Tool Use + MCP" },
-    { label: "Domain 3", chapterId: "ch04", title: "Claude Code Configuration & Workflows (20%)" },
-    { label: "Domain 4", chapterId: "ch05", title: "Prompt Engineering & Structured Output (20%) \u2014 API + Prompts" },
-    { label: "Domain 5", chapterId: "ch07", title: "Context Management & Retrieval / RAG (15%)" }
+    { label: "Domain 2", chapterId: "ch02", title: "Tool Design & MCP Integration (18%)" },
+    { label: "Domain 3", chapterId: "ch03", title: "Claude Code Configuration & Workflows (20%)" },
+    { label: "Domain 4", chapterId: "ch04", title: "Prompt Engineering & Structured Output (20%)" },
+    { label: "Domain 5", chapterId: "ch05", title: "Context Management & Retrieval / RAG (15%)" }
   ];
 
   // ---------- 3. Build the top nav ----------

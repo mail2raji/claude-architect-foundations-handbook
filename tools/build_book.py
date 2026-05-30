@@ -16,39 +16,63 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parent.parent
 
-# (chapter_no, source_dir, chapter_title, extra_md_in_order, list_code_files)
-# Chapter order now follows the Claude Certified Architect — Foundations exam domains.
-# Each subfolder under a Domain*/ root is rendered as its own chapter so the
-# builder can keep its one-folder-per-chapter contract.
-CHAPTERS: list[tuple[str, str, str, list[str], bool]] = [
-    ("1", "Domain1_AgentArchitecture_27pct",                                      "Domain 1 \u2014 Agent Architecture & Orchestration (27%)",   ["01_workflows_vs_agents.md", "exercises.md"],     True),
-    ("2", "Domain2_ToolDesign_MCP_18pct/tool_use",                                "Domain 2a \u2014 Tool Use / Function Calling",               ["exercises.md"],                                  True),
-    ("3", "Domain2_ToolDesign_MCP_18pct/mcp",                                     "Domain 2b \u2014 Model Context Protocol (MCP) (18%)",        ["01_mcp_concepts.md", "exercises.md"],            True),
-    ("4", "Domain3_ClaudeCode_Workflows_20pct",                                   "Domain 3 \u2014 Claude Code Configuration & Workflows (20%)", [],                                               False),
-    ("5", "Domain4_PromptEngineering_StructuredOutput_20pct/api_basics",          "Domain 4a \u2014 Foundations, Setup & the Claude API",       ["00_foundations.md", "00_setup_notes.md", "exercises.md"], True),
-    ("6", "Domain4_PromptEngineering_StructuredOutput_20pct/prompt_engineering",  "Domain 4b \u2014 Prompt Engineering & Evaluation (20%)",     ["exercises.md"],                                  True),
-    ("7", "Domain5_ContextMgmt_Reliability_15pct",                                "Domain 5 \u2014 Context Management & Retrieval / RAG (15%)", ["exercises.md"],                                  True),
+# Each chapter == one Domain*/ folder, mirroring the repo exactly.
+# Schema: (chapter_no, parent_dir, chapter_title, parent_extras, sub_sections)
+#   sub_sections is a list of (sub_path_under_parent, [extras]) tuples that get
+#   rendered inline so Domains 2 and 4 stay a single chapter even though they
+#   have two sub-folders on disk.
+CHAPTERS: list[tuple[str, str, str, list[str], list[tuple[str, list[str]]]]] = [
+    ("1", "Domain1_AgentArchitecture_27pct",
+        "Domain 1 \u2014 Agent Architecture & Orchestration (27%)",
+        ["01_workflows_vs_agents.md", "exercises.md"], []),
+    ("2", "Domain2_ToolDesign_MCP_18pct",
+        "Domain 2 \u2014 Tool Design & MCP Integration (18%)",
+        [],
+        [
+            ("tool_use", ["exercises.md"]),
+            ("mcp",      ["01_mcp_concepts.md", "exercises.md"]),
+        ]),
+    ("3", "Domain3_ClaudeCode_Workflows_20pct",
+        "Domain 3 \u2014 Claude Code Configuration & Workflows (20%)",
+        [], []),
+    ("4", "Domain4_PromptEngineering_StructuredOutput_20pct",
+        "Domain 4 \u2014 Prompt Engineering & Structured Output (20%)",
+        [],
+        [
+            ("api_basics",          ["00_foundations.md", "00_setup_notes.md", "exercises.md"]),
+            ("prompt_engineering",  ["exercises.md"]),
+        ]),
+    ("5", "Domain5_ContextMgmt_Reliability_15pct",
+        "Domain 5 \u2014 Context Management & Retrieval / RAG (15%)",
+        ["exercises.md"], []),
 ]
 
-# Each domain now carries its OWN exam_prep/ subfolder, so the old single
-# 'Exam preparation' appendix is gone. We keep one appendix that aggregates
-# the per-domain exam-prep material so a reader who wants a single 'study
-# everything' file still has one.
-APPENDICES: list[tuple[str, str, str, list[str]]] = [
-    ("A", "Domain1_AgentArchitecture_27pct/exam_prep", "Exam prep \u2014 Domain 1",
-        ["glossary.md", "final_checklist.md", "practice_questions.md", "practice_questions_setC.md", "exercises_harder.md", "advanced_scenarios.md"]),
-    ("B", "Domain2_ToolDesign_MCP_18pct/tool_use/exam_prep", "Exam prep \u2014 Domain 2a (tools)",
-        ["glossary.md", "final_checklist.md", "practice_questions.md", "practice_questions_setC.md", "exercises_harder.md", "advanced_scenarios.md"]),
-    ("C", "Domain2_ToolDesign_MCP_18pct/mcp/exam_prep", "Exam prep \u2014 Domain 2b (MCP)",
-        ["glossary.md", "final_checklist.md", "practice_questions.md", "practice_questions_setC.md", "exercises_harder.md", "advanced_scenarios.md"]),
-    ("D", "Domain3_ClaudeCode_Workflows_20pct/exam_prep", "Exam prep \u2014 Domain 3",
-        ["glossary.md", "final_checklist.md", "practice_questions.md", "exercises_harder.md", "advanced_scenarios.md"]),
-    ("E", "Domain4_PromptEngineering_StructuredOutput_20pct/api_basics/exam_prep", "Exam prep \u2014 Domain 4a (API)",
-        ["glossary.md", "final_checklist.md", "practice_questions.md", "practice_questions_setC.md", "exercises_harder.md", "advanced_scenarios.md", "answers_foundations_exercise.md"]),
-    ("F", "Domain4_PromptEngineering_StructuredOutput_20pct/prompt_engineering/exam_prep", "Exam prep \u2014 Domain 4b (prompts)",
-        ["glossary.md", "final_checklist.md", "practice_questions.md", "practice_questions_setC.md", "exercises_harder.md", "advanced_scenarios.md"]),
-    ("G", "Domain5_ContextMgmt_Reliability_15pct/exam_prep", "Exam prep \u2014 Domain 5",
-        ["glossary.md", "final_checklist.md", "practice_questions.md", "practice_questions_setC.md", "exercises_harder.md", "advanced_scenarios.md"]),
+# One appendix per Domain. Each appendix can pull from multiple exam_prep/ paths.
+APPENDICES: list[tuple[str, list[tuple[str, list[str]]], str]] = [
+    ("A",
+        [("Domain1_AgentArchitecture_27pct/exam_prep",
+            ["glossary.md", "final_checklist.md", "practice_questions.md", "practice_questions_setC.md", "exercises_harder.md", "advanced_scenarios.md"])],
+        "Exam prep \u2014 Domain 1"),
+    ("B",
+        [("Domain2_ToolDesign_MCP_18pct/tool_use/exam_prep",
+            ["glossary.md", "final_checklist.md", "practice_questions.md", "practice_questions_setC.md", "exercises_harder.md", "advanced_scenarios.md"]),
+         ("Domain2_ToolDesign_MCP_18pct/mcp/exam_prep",
+            ["glossary.md", "final_checklist.md", "practice_questions.md", "practice_questions_setC.md", "exercises_harder.md", "advanced_scenarios.md"])],
+        "Exam prep \u2014 Domain 2"),
+    ("C",
+        [("Domain3_ClaudeCode_Workflows_20pct/exam_prep",
+            ["glossary.md", "final_checklist.md", "practice_questions.md", "exercises_harder.md", "advanced_scenarios.md"])],
+        "Exam prep \u2014 Domain 3"),
+    ("D",
+        [("Domain4_PromptEngineering_StructuredOutput_20pct/api_basics/exam_prep",
+            ["glossary.md", "final_checklist.md", "practice_questions.md", "practice_questions_setC.md", "exercises_harder.md", "advanced_scenarios.md", "answers_foundations_exercise.md"]),
+         ("Domain4_PromptEngineering_StructuredOutput_20pct/prompt_engineering/exam_prep",
+            ["glossary.md", "final_checklist.md", "practice_questions.md", "practice_questions_setC.md", "exercises_harder.md", "advanced_scenarios.md"])],
+        "Exam prep \u2014 Domain 4"),
+    ("E",
+        [("Domain5_ContextMgmt_Reliability_15pct/exam_prep",
+            ["glossary.md", "final_checklist.md", "practice_questions.md", "practice_questions_setC.md", "exercises_harder.md", "advanced_scenarios.md"])],
+        "Exam prep \u2014 Domain 5"),
 ]
 
 
@@ -90,55 +114,68 @@ def list_code_files(dir_path: Path) -> list[str]:
     return sorted(p.name for p in dir_path.glob("*.py"))
 
 
-def build_chapter(no: str, src_dir: str, title: str, extras: list[str], with_code: bool) -> str:
+def _emit_folder(parts: list[str], src_dir: str, extras: list[str],
+                 heading_shift: int = 1, with_code: bool = True,
+                 code_heading: str = "Code samples in this chapter") -> None:
     folder = ROOT / src_dir
-    section_anchor = f"chapter-{no}-{slugify(title)}"
-    parts: list[str] = [f"\n\n<a id='{section_anchor}'></a>\n\n# Chapter {no}. {title}\n"]
-    parts.append(f"> Source folder: [`{src_dir}/`]({src_dir}/README.md)\n")
-
     readme = read(folder / "README.md")
     if readme:
-        # demote so chapter h1 stays unique
-        parts.append(shift_headings(readme, 1))
-
+        parts.append(shift_headings(readme, heading_shift))
     for extra in extras:
-        epath = folder / extra
-        content = read(epath)
+        content = read(folder / extra)
         if not content:
             continue
-        parts.append(f"\n\n## {Path(extra).stem.replace('_', ' ').title()}\n")
-        parts.append(shift_headings(content, 1))
-
+        parts.append(f"\n\n{'#' * (heading_shift + 1)} {Path(extra).stem.replace('_', ' ').title()}\n")
+        parts.append(shift_headings(content, heading_shift))
     if with_code:
         code_files = list_code_files(folder)
         if code_files:
-            parts.append("\n\n## Code samples in this chapter\n")
+            parts.append(f"\n\n{'#' * (heading_shift + 1)} {code_heading}\n")
             for cf in code_files:
                 parts.append(f"- [`{cf}`]({src_dir}/{cf})")
 
+
+def build_chapter(no: str, parent_dir: str, title: str,
+                  parent_extras: list[str],
+                  sub_sections: list[tuple[str, list[str]]]) -> str:
+    section_anchor = f"chapter-{no}-{slugify(title)}"
+    parts: list[str] = [f"\n\n<a id='{section_anchor}'></a>\n\n# Chapter {no}. {title}\n"]
+    parts.append(f"> Source folder: [`{parent_dir}/`]({parent_dir}/README.md)\n")
+
+    _emit_folder(parts, parent_dir, parent_extras, heading_shift=1, with_code=True,
+                 code_heading="Code samples in this chapter")
+
+    for sub_rel, sub_extras in sub_sections:
+        sub_src = f"{parent_dir}/{sub_rel}"
+        parts.append(f"\n\n---\n\n## {sub_rel}/ &mdash; sub-section\n")
+        parts.append(f"> Source folder: [`{sub_src}/`]({sub_src}/README.md)\n")
+        _emit_folder(parts, sub_src, sub_extras, heading_shift=2, with_code=True,
+                     code_heading=f"Code samples in `{sub_rel}/`")
     return "\n".join(parts)
 
 
-def build_appendix(letter: str, src_dir: str, title: str, files: list[str]) -> str:
-    folder = ROOT / src_dir
+def build_appendix(letter: str, sources: list[tuple[str, list[str]]], title: str) -> str:
     section_anchor = f"appendix-{letter.lower()}-{slugify(title)}"
     parts: list[str] = [f"\n\n<a id='{section_anchor}'></a>\n\n# Appendix {letter}. {title}\n"]
-    parts.append(f"> Source folder: [`{src_dir}/`]({src_dir}/README.md)\n")
-    readme = read(folder / "README.md")
-    if readme:
-        parts.append(shift_headings(readme, 1))
-    for f in files:
-        content = read(folder / f)
-        if not content:
-            continue
-        parts.append(f"\n\n## {Path(f).stem.replace('_', ' ').title()}\n")
-        parts.append(shift_headings(content, 1))
-    # list code if any
-    code_files = list_code_files(folder)
-    if code_files:
-        parts.append("\n\n## Code samples in this appendix\n")
-        for cf in code_files:
-            parts.append(f"- [`{cf}`]({src_dir}/{cf})")
+    for idx, (src_dir, files) in enumerate(sources):
+        if idx > 0:
+            parts.append("\n\n---\n")
+        parts.append(f"> Source folder: [`{src_dir}/`]({src_dir}/README.md)\n")
+        folder = ROOT / src_dir
+        readme = read(folder / "README.md")
+        if readme:
+            parts.append(shift_headings(readme, 1))
+        for f in files:
+            content = read(folder / f)
+            if not content:
+                continue
+            parts.append(f"\n\n## {Path(f).stem.replace('_', ' ').title()}\n")
+            parts.append(shift_headings(content, 1))
+        code_files = list_code_files(folder)
+        if code_files:
+            parts.append("\n\n## Code samples in this section\n")
+            for cf in code_files:
+                parts.append(f"- [`{cf}`]({src_dir}/{cf})")
     return "\n".join(parts)
 
 
@@ -149,11 +186,11 @@ def build_toc() -> str:
     lines.append("- [Preface](#preface)")
     lines.append("- [How to use this handbook](#how-to-use-this-handbook)")
     lines.append("\n## Chapters\n")
-    for no, src_dir, title, _, _ in CHAPTERS:
+    for no, _, title, _, _ in CHAPTERS:
         anchor = f"chapter-{no}-{slugify(title)}"
         lines.append(f"- [Chapter {no}. {title}](#{anchor})")
     lines.append("\n## Appendices\n")
-    for letter, _, title, _ in APPENDICES:
+    for letter, _, title in APPENDICES:
         anchor = f"appendix-{letter.lower()}-{slugify(title)}"
         lines.append(f"- [Appendix {letter}. {title}](#{anchor})")
     return "\n".join(lines)
@@ -172,12 +209,12 @@ def main() -> int:
     parts.append(build_toc())
     parts.append("\n\n---\n")
 
-    for no, src, title, extras, with_code in CHAPTERS:
-        parts.append(build_chapter(no, src, title, extras, with_code))
+    for no, parent_dir, title, parent_extras, sub_sections in CHAPTERS:
+        parts.append(build_chapter(no, parent_dir, title, parent_extras, sub_sections))
         parts.append("\n\n---\n")
 
-    for letter, src, title, files in APPENDICES:
-        parts.append(build_appendix(letter, src, title, files))
+    for letter, sources, title in APPENDICES:
+        parts.append(build_appendix(letter, sources, title))
         parts.append("\n\n---\n")
 
     parts.append("\n\n*Generated by `tools/build_book.py`. Re-run after editing any chapter.*\n")
