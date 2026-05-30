@@ -20,6 +20,7 @@ GitHub Actions runs the same script before `mdbook build`.
 
 from __future__ import annotations
 
+import posixpath
 import re
 import shutil
 import sys
@@ -89,6 +90,8 @@ def rewrite_links(text: str, chapter_subdir: str) -> str:
     Inside a chapter README, links like `01_first_message.py` or
     `(../Domain1_AgentArchitecture_27pct/README.md)` won't resolve under mdbook/src.
     We turn them into absolute GitHub URLs so users can still click through.
+    Relative paths (including ``../``) are resolved against ``chapter_subdir``
+    using ``posixpath.normpath`` so they stay accurate after upward traversal.
     """
     base = "https://github.com/mail2raji/claude-architect-foundations-handbook/blob/main"
 
@@ -101,12 +104,12 @@ def rewrite_links(text: str, chapter_subdir: str) -> str:
         if "#" in target:
             target, anchor = target.split("#", 1)
             anchor = "#" + anchor
-        # Resolve relative to original chapter folder
-        if target.startswith("../"):
-            # link points outside the chapter folder
-            resolved = target.lstrip("./")
+        # Resolve relative path against the chapter folder using POSIX rules so
+        # `../foo` inside Domain4/api_basics becomes Domain4/foo (not foo).
+        if target:
+            resolved = posixpath.normpath(posixpath.join(chapter_subdir, target))
         else:
-            resolved = f"{chapter_subdir}/{target}" if target else chapter_subdir
+            resolved = chapter_subdir
         return f"[{label}]({base}/{resolved}{anchor})"
 
     # markdown link pattern: [label](target)

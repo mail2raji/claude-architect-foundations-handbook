@@ -72,4 +72,4 @@ Production agents almost always do **both**.
 
 ---
 
-Next → [Domain 5 — Context Management & Reliability](../Domain5_ContextMgmt_Reliability_15pct/README.md)
+Next → [Domain 3 — Claude Code Configuration & Workflows](../Domain3_ClaudeCode_Workflows_20pct/README.md)

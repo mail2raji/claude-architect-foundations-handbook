@@ -1,5 +1,50 @@
 /* === Decorative styles for the landing page === */
 
+/* --- Horizontal top nav bar (injected by topnav.js) --- */
+#ccaf-topnav {
+  position: sticky;
+  top: 0;
+  z-index: 99;
+  background: linear-gradient(90deg, #1b2a4e 0%, #2a4d8f 100%);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.12);
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+}
+.ccaf-topnav-inner {
+  display: flex;
+  flex-wrap: nowrap;
+  gap: 0.15rem;
+  padding: 0.35rem 0.75rem;
+  max-width: 1400px;
+  margin: 0 auto;
+  white-space: nowrap;
+}
+#ccaf-topnav a {
+  display: inline-block;
+  padding: 0.45rem 0.8rem;
+  color: #e8eef9 !important;
+  text-decoration: none !important;
+  font-size: 0.88rem;
+  font-weight: 500;
+  border-radius: 6px;
+  transition: background 0.15s ease, color 0.15s ease;
+}
+#ccaf-topnav a:hover {
+  background: rgba(255, 255, 255, 0.12);
+  color: #fff !important;
+}
+#ccaf-topnav a.active {
+  background: rgba(255, 255, 255, 0.18);
+  color: #fff !important;
+  font-weight: 700;
+}
+
+/* Push mdBook's own content down so the sticky nav doesn't cover headings. */
+.page-wrapper > .page {
+  padding-top: 0.5rem;
+}
+
 /* --- Hero block --- */
 .hero {
   margin: 1.25rem 0 1.75rem;

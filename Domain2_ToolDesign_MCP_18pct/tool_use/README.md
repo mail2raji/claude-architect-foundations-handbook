@@ -125,4 +125,4 @@ This is one short step away from a full Phase-7 ReAct agent.
 
 ## 4.9 Exercises & mini quiz → [`exercises.md`](exercises.md)
 
-Next → [Domain 2b: MCP](../mcp/README.md) · then [Domain 5: Context Management & RAG](../../Domain5_ContextMgmt_Reliability_15pct/README.md)
+Next → [Domain 2b: Model Context Protocol (MCP)](../mcp/README.md)

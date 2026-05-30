@@ -160,4 +160,4 @@ python Domain2_ToolDesign_MCP_18pct/mcp/04_bridge_mcp_to_claude.py
 
 ## 6.9 Exercises & mini quiz → [`exercises.md`](exercises.md)
 
-Next → [Domain 1: Agent Architecture & Orchestration](../../Domain1_AgentArchitecture_27pct/README.md)
+Next → [Domain 3: Claude Code Configuration & Workflows](../../Domain3_ClaudeCode_Workflows_20pct/README.md)

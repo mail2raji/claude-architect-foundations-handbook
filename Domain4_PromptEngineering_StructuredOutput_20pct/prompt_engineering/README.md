@@ -143,4 +143,4 @@ See [`exercises.md`](exercises.md).
 
 Answers at the bottom of [`exercises.md`](exercises.md).
 
-Next → [Domain 2a: Tool Use](../../Domain2_ToolDesign_MCP_18pct/tool_use/README.md)
+Next → [Domain 5: Context Management & Retrieval (RAG)](../../Domain5_ContextMgmt_Reliability_15pct/README.md)

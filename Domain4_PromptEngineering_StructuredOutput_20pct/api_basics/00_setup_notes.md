@@ -4,7 +4,7 @@
 
 ## Steps
 
-1. Finish [`../SETUP.md`](../SETUP.md) (venv, deps, API key).
+1. Finish [`../../SETUP.md`](../../SETUP.md) (venv, deps, API key).
 2. Run `python 01_first_call.py`.
 3. You should see Claude reply with a short message.
 

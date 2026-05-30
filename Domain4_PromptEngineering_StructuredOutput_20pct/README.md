@@ -65,4 +65,4 @@ The retry-with-feedback loop is built in [LAB_GUIDE.md](../LAB_GUIDE.md) Lab 4.4
 
 ---
 
-Next → [Domain 2 — Tool Design & MCP Integration](../Domain2_ToolDesign_MCP_18pct/README.md)
+Next → [Domain 5 — Context Management & Reliability](../Domain5_ContextMgmt_Reliability_15pct/README.md)

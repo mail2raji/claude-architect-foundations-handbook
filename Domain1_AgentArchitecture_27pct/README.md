@@ -137,4 +137,4 @@ You build a compressed version in [`mini_project_research_agent.py`](mini_projec
 
 ## 7.7 Exercises & mini quiz → [`exercises.md`](exercises.md)
 
-Next → [Domain 3: Claude Code Configuration & Workflows](../Domain3_ClaudeCode_Workflows_20pct/README.md)
+Next → [Domain 2a: Tool Use (function calling)](../Domain2_ToolDesign_MCP_18pct/tool_use/README.md)

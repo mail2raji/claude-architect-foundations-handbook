@@ -105,4 +105,4 @@ Before embedding/BM25-indexing a chunk, **prefix the chunk with a 1-paragraph Cl
 
 ## 5.7 Exercises & mini quiz → [`exercises.md`](exercises.md)
 
-Next → [Domain 2b: Model Context Protocol](../Domain2_ToolDesign_MCP_18pct/mcp/README.md)
+Next → drill the exam-prep material per domain. Start with the heaviest: [Domain1_AgentArchitecture_27pct/exam_prep/](../Domain1_AgentArchitecture_27pct/exam_prep/).

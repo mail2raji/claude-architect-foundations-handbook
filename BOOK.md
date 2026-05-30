@@ -336,7 +336,7 @@ You build a compressed version in [`mini_project_research_agent.py`](mini_projec
 
 ### 7.7 Exercises & mini quiz → [`exercises.md`](exercises.md)
 
-Next → [Domain 3: Claude Code Configuration & Workflows](../Domain3_ClaudeCode_Workflows_20pct/README.md)
+Next → [Domain 2a: Tool Use (function calling)](../Domain2_ToolDesign_MCP_18pct/tool_use/README.md)
 
 
 ## 01 Workflows Vs Agents
@@ -546,7 +546,7 @@ This is one short step away from a full Phase-7 ReAct agent.
 
 ### 4.9 Exercises & mini quiz → [`exercises.md`](exercises.md)
 
-Next → [Domain 2b: MCP](../mcp/README.md) · then [Domain 5: Context Management & RAG](../../Domain5_ContextMgmt_Reliability_15pct/README.md)
+Next → [Domain 2b: Model Context Protocol (MCP)](../mcp/README.md)
 
 
 ## Exercises
@@ -755,7 +755,7 @@ python Domain2_ToolDesign_MCP_18pct/mcp/04_bridge_mcp_to_claude.py
 
 ### 6.9 Exercises & mini quiz → [`exercises.md`](exercises.md)
 
-Next → [Domain 1: Agent Architecture & Orchestration](../../Domain1_AgentArchitecture_27pct/README.md)
+Next → [Domain 3: Claude Code Configuration & Workflows](../../Domain3_ClaudeCode_Workflows_20pct/README.md)
 
 
 ## 01 Mcp Concepts
@@ -941,7 +941,7 @@ No runnable code in this phase — those tools require a VM (Computer Use) or a 
 - Both are **agents under the hood** — every Phase 7 safety knob applies.
 - Computer Use is **vision-based** — it relies on screenshots.
 
-Next → drill the exam-prep material per domain. Start with the heaviest: [Domain1_AgentArchitecture_27pct/exam_prep/](../Domain1_AgentArchitecture_27pct/exam_prep/).
+Next → [Domain 4a: Foundations, Setup & the Claude API](../Domain4_PromptEngineering_StructuredOutput_20pct/api_basics/README.md)
 
 
 ---
@@ -1198,7 +1198,7 @@ In your own words, answer in a notebook or `notes.md`:
 - Know that **Constitutional AI** is Anthropic's safety method.
 - Know the difference between **claude.ai** (consumer), **API** (developer), **Bedrock/Vertex** (enterprise cloud).
 
-Next → [Domain 4a: Working with the Claude API](../Domain4_PromptEngineering_StructuredOutput_20pct/api_basics/README.md)
+Next → [Domain 4a: Working with the Claude API](README.md)
 
 
 ## 00 Setup Notes
@@ -1209,7 +1209,7 @@ Next → [Domain 4a: Working with the Claude API](../Domain4_PromptEngineering_S
 
 ### Steps
 
-1. Finish [`../SETUP.md`](../SETUP.md) (venv, deps, API key).
+1. Finish [`../../SETUP.md`](../../SETUP.md) (venv, deps, API key).
 2. Run `python 01_first_call.py`.
 3. You should see Claude reply with a short message.
 
@@ -1408,7 +1408,7 @@ See [`exercises.md`](exercises.md).
 
 Answers at the bottom of [`exercises.md`](exercises.md).
 
-Next → [Domain 2a: Tool Use](../../Domain2_ToolDesign_MCP_18pct/tool_use/README.md)
+Next → [Domain 5: Context Management & Retrieval (RAG)](../../Domain5_ContextMgmt_Reliability_15pct/README.md)
 
 
 ## Exercises
@@ -1556,7 +1556,7 @@ Before embedding/BM25-indexing a chunk, **prefix the chunk with a 1-paragraph Cl
 
 ### 5.7 Exercises & mini quiz → [`exercises.md`](exercises.md)
 
-Next → [Domain 2b: Model Context Protocol](../Domain2_ToolDesign_MCP_18pct/mcp/README.md)
+Next → drill the exam-prep material per domain. Start with the heaviest: [Domain1_AgentArchitecture_27pct/exam_prep/](../Domain1_AgentArchitecture_27pct/exam_prep/).
 
 
 ## Exercises

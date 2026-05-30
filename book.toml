@@ -14,6 +14,7 @@ copy-fonts            = true
 mathjax-support       = false
 no-section-label      = false
 additional-css        = ["mdbook/theme/extra.css"]
+additional-js         = ["mdbook/theme/topnav.js"]
 
 [output.html.search]
 enable = true
