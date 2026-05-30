@@ -34,17 +34,28 @@
     { id: "ch07", num: "5",  short: "Domain 5 \u00b7 RAG",          weight: "15%", folder: "Domain5_ContextMgmt_Reliability_15pct"                                    }
   ];
 
+  // Top-bar groups one entry per cert domain (Domain 1..5). Domains 2 and 4 each
+  // contain two chapters on the site; the top-bar button opens the first one and
+  // the sidebar exposes the second (sub-chapter).
+  var DOMAINS = [
+    { label: "Domain 1", chapterId: "ch01", title: "Agent Architecture & Orchestration (27%)" },
+    { label: "Domain 2", chapterId: "ch02", title: "Tool Design & MCP (18%) \u2014 Tool Use + MCP" },
+    { label: "Domain 3", chapterId: "ch04", title: "Claude Code Configuration & Workflows (20%)" },
+    { label: "Domain 4", chapterId: "ch05", title: "Prompt Engineering & Structured Output (20%) \u2014 API + Prompts" },
+    { label: "Domain 5", chapterId: "ch07", title: "Context Management & Retrieval / RAG (15%)" }
+  ];
+
   // ---------- 3. Build the top nav ----------
   var navLinks = [
     { label: "\ud83c\udfe0 Home",       href: root + "introduction.html" },
     { label: "\ud83d\udcd8 Preface",    href: root + "preface.html" },
     { label: "\ud83e\udded How to use", href: root + "how-to-use.html" }
   ];
-  CHAPTERS.forEach(function (c) {
+  DOMAINS.forEach(function (d) {
     navLinks.push({
-      label: c.short + (c.weight ? " (" + c.weight + ")" : ""),
-      href: root + c.id + "/index.html",
-      title: c.folder
+      label: d.label,
+      href: root + d.chapterId + "/index.html",
+      title: d.title
     });
   });
   navLinks.push({ label: "\ud83d\udcdd Exam prep", href: root + "appendix-a/index.html", title: "Appendices A\u2013G" });
