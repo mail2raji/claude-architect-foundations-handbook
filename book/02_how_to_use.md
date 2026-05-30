@@ -8,11 +8,11 @@ Open [`BOOK.md`](../BOOK.md) and read it cover-to-cover on GitHub. Every chapter
 
 ## Mode 2 — Run the chapters
 
-Each chapter has its own folder ([`Phase0_Setup/`](../Phase0_Setup/README.md), [`Phase1_Foundations/`](../Phase1_Foundations/README.md), …) with a chapter README, runnable `*.py` files, and an `exercises.md`. Clone the repo, set up the environment, run each sample.
+Each chapter has its own folder. The pre-domain modules keep their `Phase*` names ([`Phase0_Setup/`](../Phase0_Setup/README.md), [`Phase1_Foundations/`](../Phase1_Foundations/README.md)), the five exam-domain modules use `Domain*` names (see layout below), and exam prep + capstone keep their `Phase*` names. Each folder contains a chapter README, runnable `*.py` files, and (usually) an `exercises.md`.
 
 ## Mode 3 — Treat it as exam prep
 
-Skip to [`Phase9_ExamPrep/`](../Phase9_ExamPrep/README.md) for glossary, three mock exams (90 questions total), and a per-phase checklist. Then deepen with [`Phase10_Advanced_Capstone/`](../Phase10_Advanced_Capstone/README.md).
+Skip to [`Phase9_ExamPrep/`](../Phase9_ExamPrep/README.md) for glossary, three mock exams (90 questions total), and a per-domain checklist. Then deepen with [`Phase10_Advanced_Capstone/`](../Phase10_Advanced_Capstone/README.md). Also see [`LAB_GUIDE.md`](../LAB_GUIDE.md) for a full domain-by-domain lab walkthrough.
 
 ## Required setup
 
@@ -33,18 +33,21 @@ If you run every code sample once, the total Anthropic spend is typically under 
 ├── README.md                     repo landing page
 ├── SETUP.md                      environment setup
 ├── EXAM_BLUEPRINT.md             exam domain weights & checklist
+├── LAB_GUIDE.md                  domain-by-domain hands-on labs
 ├── requirements.txt
 ├── book/                         book front matter (preface, etc.)
-├── Phase0_Setup/                 Chapter 1
-├── Phase1_Foundations/           Chapter 2
-├── Phase2_API_Basics/            Chapter 3
-├── Phase3_Prompt_Engineering/    Chapter 4
-├── Phase4_Tool_Use/              Chapter 5
-├── Phase5_RAG/                   Chapter 6
-├── Phase6_MCP/                   Chapter 7
-├── Phase7_Agentic_AI/            Chapter 8
-├── Phase8_Claude_Code_Computer_Use/  Chapter 9
-├── Phase9_ExamPrep/              Chapter 10 (Appendix A)
-├── Phase10_Advanced_Capstone/    Chapter 11 (Appendix B)
-└── tools/                        BOOK.md builder script
+├── Phase0_Setup/                                              Chapter 1  (pre-domain)
+├── Phase1_Foundations/                                        Chapter 2  (pre-domain)
+├── Domain4_PromptEngineering_StructuredOutput_20pct/          Chapters 3–4  (Domain 4, 20%)
+│   ├── api_basics/
+│   └── prompt_engineering/
+├── Domain2_ToolDesign_MCP_18pct/                              Chapters 5 & 7  (Domain 2, 18%)
+│   ├── tool_use/
+│   └── mcp/
+├── Domain5_ContextMgmt_Reliability_15pct/                     Chapter 6  (Domain 5, 15%)
+├── Domain1_AgentArchitecture_27pct/                           Chapter 8  (Domain 1, 27%)
+├── Domain3_ClaudeCode_Workflows_20pct/                        Chapter 9  (Domain 3, 20%)
+├── Phase9_ExamPrep/                                           Appendix A
+├── Phase10_Advanced_Capstone/                                 Appendix B
+└── tools/                        BOOK.md & mdbook builder scripts
 ```

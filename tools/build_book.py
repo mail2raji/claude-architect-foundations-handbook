@@ -17,16 +17,19 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parent.parent
 
 # (chapter_no, source_dir, chapter_title, extra_md_in_order, list_code_files)
+# Chapter order now follows the Claude Certified Architect — Foundations exam domains.
+# Each subfolder under a Domain*/ root is rendered as its own chapter so the
+# builder can keep its one-folder-per-chapter contract.
 CHAPTERS: list[tuple[str, str, str, list[str], bool]] = [
-    ("1",  "Phase0_Setup",                       "Setup and your first API call",            [],                                                False),
-    ("2",  "Phase1_Foundations",                 "Claude and GenAI foundations",             [],                                                False),
-    ("3",  "Phase2_API_Basics",                  "Working with the Claude API",              ["exercises.md"],                                  True),
-    ("4",  "Phase3_Prompt_Engineering",          "Prompt engineering and evaluation",        ["exercises.md"],                                  True),
-    ("5",  "Phase4_Tool_Use",                    "Tool use (function calling)",              ["exercises.md"],                                  True),
-    ("6",  "Phase5_RAG",                         "Retrieval-augmented generation",           ["exercises.md"],                                  True),
-    ("7",  "Phase6_MCP",                         "Model Context Protocol (MCP)",             ["01_mcp_concepts.md", "exercises.md"],            True),
-    ("8",  "Phase7_Agentic_AI",                  "Agents and workflows",                     ["01_workflows_vs_agents.md", "exercises.md"],     True),
-    ("9",  "Phase8_Claude_Code_Computer_Use",    "Claude Code and Computer Use",             [],                                                False),
+    ("1", "Phase0_Setup",                                                         "Setup and your first API call",                       [],                                                False),
+    ("2", "Phase1_Foundations",                                                   "Claude and GenAI foundations",                        [],                                                False),
+    ("3", "Domain4_PromptEngineering_StructuredOutput_20pct/api_basics",          "Domain 4a \u2014 Working with the Claude API",       ["exercises.md"],                                  True),
+    ("4", "Domain4_PromptEngineering_StructuredOutput_20pct/prompt_engineering",  "Domain 4b \u2014 Prompt engineering and evaluation", ["exercises.md"],                                  True),
+    ("5", "Domain2_ToolDesign_MCP_18pct/tool_use",                                "Domain 2a \u2014 Tool use (function calling)",       ["exercises.md"],                                  True),
+    ("6", "Domain5_ContextMgmt_Reliability_15pct",                                "Domain 5 \u2014 Context management & retrieval (RAG)", ["exercises.md"],                                True),
+    ("7", "Domain2_ToolDesign_MCP_18pct/mcp",                                     "Domain 2b \u2014 Model Context Protocol (MCP)",      ["01_mcp_concepts.md", "exercises.md"],            True),
+    ("8", "Domain1_AgentArchitecture_27pct",                                      "Domain 1 \u2014 Agent architecture & orchestration", ["01_workflows_vs_agents.md", "exercises.md"],     True),
+    ("9", "Domain3_ClaudeCode_Workflows_20pct",                                   "Domain 3 \u2014 Claude Code configuration & workflows", [],                                            False),
 ]
 
 APPENDICES: list[tuple[str, str, str, list[str]]] = [

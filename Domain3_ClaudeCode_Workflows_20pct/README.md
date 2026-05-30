@@ -1,4 +1,6 @@
-# Phase 8 — Claude Code & Computer Use
+# Domain 3 — Claude Code Configuration & Workflows
+
+*Was Phase 8.* **Cert weight: 20%.**
 
 **Maps to:** Skilljar "Claude Code & Computer Use" (8 lessons). **Exam weight: ~3%.**
 **Goal:** Awareness-level understanding of two Anthropic-built agentic surfaces.

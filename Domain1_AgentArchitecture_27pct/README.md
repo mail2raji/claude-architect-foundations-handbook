@@ -1,4 +1,6 @@
-# Phase 7 — Agents & Workflows
+# Domain 1 — Agent Architecture & Orchestration
+
+*Was Phase 7.* **Cert weight: 27% (the heaviest domain).**
 
 **Maps to:** Skilljar "Agents and workflows" (11 lessons). **Exam weight: ~12%.**
 **Goal:** Choose the right architecture for an autonomous Claude system and implement it.
@@ -135,4 +137,4 @@ You build a compressed version in [`mini_project_research_agent.py`](mini_projec
 
 ## 7.7 Exercises & mini quiz → [`exercises.md`](exercises.md)
 
-Next → [Phase 8: Claude Code & Computer Use](../Phase8_Claude_Code_Computer_Use/README.md)
+Next → [Domain 3: Claude Code Configuration & Workflows](../Domain3_ClaudeCode_Workflows_20pct/README.md)

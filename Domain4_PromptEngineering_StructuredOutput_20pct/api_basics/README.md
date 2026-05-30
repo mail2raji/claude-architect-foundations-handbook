@@ -1,4 +1,6 @@
-# Phase 2 — Working with the Claude API
+# Domain 4a — Working with the Claude API
+
+*Was Phase 2.* See the parent [Domain 4 README](../README.md) for the full API + Prompt context. **Cert weight: part of Domain 4 (20%).**
 
 **Maps to:** Skilljar "Getting started with Claude" (16 lessons). **Exam weight: ~15%.**
 **Goal:** Confidently call the Messages API for chat, streaming, vision, and structured output.
@@ -116,4 +118,4 @@ See [`exercises.md`](exercises.md).
 
 Answers at the bottom of [`exercises.md`](exercises.md).
 
-Next → [Phase 3: Prompt Engineering & Evaluation](../Phase3_Prompt_Engineering/README.md)
+Next → [Domain 4b: Prompt Engineering & Evaluation](../prompt_engineering/README.md)

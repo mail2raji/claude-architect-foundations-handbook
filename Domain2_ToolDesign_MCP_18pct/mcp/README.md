@@ -1,4 +1,6 @@
-# Phase 6 — Model Context Protocol (MCP)
+# Domain 2b — Model Context Protocol (MCP)
+
+*Was Phase 6.* See the parent [Domain 2 README](../README.md) for the full Tool + MCP context. **Cert weight: part of Domain 2 (18%).**
 
 **Maps to:** Skilljar "Model Context Protocol (MCP)" (12 lessons) + the dedicated **MCP fundamentals** course (16 lessons). **Exam weight: ~10%.**
 **Goal:** Build and consume MCP **servers** and **clients** so any Claude app can plug in your data and tools without bespoke glue code.
@@ -93,7 +95,7 @@ You add it to the client's config file:
   "mcpServers": {
     "my-server": {
       "command": "python",
-      "args": ["C:\\Scripts\\Send-escalationEmail\\Claude_Learning\\Phase6_MCP\\02_mcp_server.py"]
+      "args": ["C:\\Scripts\\Send-escalationEmail\\Claude_Learning\\Domain2_ToolDesign_MCP_18pct/mcp/\02_mcp_server.py"]
     }
   }
 }
@@ -150,12 +152,12 @@ We implement this end-to-end in `03_mcp_client.py` and then **bridge it to Claud
 cd Claude_Learning
 .\.venv\Scripts\Activate.ps1
 # Terminal 1: nothing — the client launches the server as a subprocess.
-python Phase6_MCP\03_mcp_client.py
-python Phase6_MCP\04_bridge_mcp_to_claude.py
+python Domain2_ToolDesign_MCP_18pct/mcp/03_mcp_client.py
+python Domain2_ToolDesign_MCP_18pct/mcp/04_bridge_mcp_to_claude.py
 ```
 
 ---
 
 ## 6.9 Exercises & mini quiz → [`exercises.md`](exercises.md)
 
-Next → [Phase 7: Agentic AI](../Phase7_Agentic_AI/README.md)
+Next → [Domain 1: Agent Architecture & Orchestration](../../Domain1_AgentArchitecture_27pct/README.md)

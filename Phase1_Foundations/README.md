@@ -117,4 +117,4 @@ In your own words, answer in a notebook or `notes.md`:
 - Know that **Constitutional AI** is Anthropic's safety method.
 - Know the difference between **claude.ai** (consumer), **API** (developer), **Bedrock/Vertex** (enterprise cloud).
 
-Next → [Phase 2: Working with the Claude API](../Phase2_API_Basics/README.md)
+Next → [Domain 4a: Working with the Claude API](../Domain4_PromptEngineering_StructuredOutput_20pct/api_basics/README.md)

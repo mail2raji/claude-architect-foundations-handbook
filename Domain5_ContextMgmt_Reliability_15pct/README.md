@@ -1,4 +1,6 @@
-# Phase 5 — Retrieval Augmented Generation (RAG)
+# Domain 5 — Context Management & Reliability (RAG)
+
+*Was Phase 5.* **Cert weight: 15%.**
 
 **Maps to:** Skilljar "Retrieval augmented generation" (10 lessons). **Exam weight: ~12%.**
 **Goal:** Give Claude domain knowledge it wasn't trained on — accurately and cheaply.
@@ -103,4 +105,4 @@ Before embedding/BM25-indexing a chunk, **prefix the chunk with a 1-paragraph Cl
 
 ## 5.7 Exercises & mini quiz → [`exercises.md`](exercises.md)
 
-Next → [Phase 6: Model Context Protocol](../Phase6_MCP/README.md)
+Next → [Domain 2b: Model Context Protocol](../Domain2_ToolDesign_MCP_18pct/mcp/README.md)

@@ -40,21 +40,25 @@ A complete, hands-on, real-world **book + repository** to learn **Claude (by Ant
 
 ---
 
-## Learning Roadmap (11 phases)
+## Learning Roadmap (organised by exam domain)
 
-| Phase | Topic | Maps to Skilljar section | Folder |
-|---|---|---|---|
-| 0 | Setup & first API call | Pre-req | [Phase0_Setup/](Phase0_Setup/README.md) |
-| 1 | Claude & GenAI Foundations | Pre-req | [Phase1_Foundations/](Phase1_Foundations/README.md) |
-| 2 | Working with the Claude API | "Getting started with Claude" (16) | [Phase2_API_Basics/](Phase2_API_Basics/README.md) |
-| 3 | Prompt Engineering & Evaluation | "Prompt engineering & evaluation" (16) | [Phase3_Prompt_Engineering/](Phase3_Prompt_Engineering/README.md) |
-| 4 | Tool Use (Function Calling) | "Tool use with Claude" (14) | [Phase4_Tool_Use/](Phase4_Tool_Use/README.md) |
-| 5 | Retrieval Augmented Generation | "Retrieval augmented generation" (10) | [Phase5_RAG/](Phase5_RAG/README.md) |
-| 6 | Model Context Protocol (MCP) | "Model Context Protocol (MCP)" (12) | [Phase6_MCP/](Phase6_MCP/README.md) |
-| 7 | Agents & Workflows | "Agents and workflows" (11) | [Phase7_Agentic_AI/](Phase7_Agentic_AI/README.md) |
-| 8 | Claude Code & Computer Use | "Claude Code & Computer Use" (8) | [Phase8_Claude_Code_Computer_Use/](Phase8_Claude_Code_Computer_Use/README.md) |
-| 9 | Exam Prep (glossary + 90 practice Qs across 3 sets + checklist) | All sections | [Phase9_ExamPrep/](Phase9_ExamPrep/README.md) |
-| **10** | **Advanced Capstone (5 production projects + gotchas + 25 architecture exercises)** | All sections, deepened | [Phase10_Advanced_Capstone/](Phase10_Advanced_Capstone/README.md) |
+The Claude Certified Architect — Foundations exam has five domains with the following weights. Pre-domain (Phase 0–1) and post-domain (Phase 9–10) modules support the five domain folders.
+
+| Order | Module | Maps to exam domain | Cert weight | Folder |
+|---|---|---|---|---|
+| 0 | Setup & first API call | Pre-req | — | [Phase0_Setup/](Phase0_Setup/README.md) |
+| 1 | Claude & GenAI Foundations | Pre-req | — | [Phase1_Foundations/](Phase1_Foundations/README.md) |
+| 2 | Working with the Claude API | **Domain 4** — Prompt Engineering & Structured Output | 20% | [Domain4_…/api_basics/](Domain4_PromptEngineering_StructuredOutput_20pct/api_basics/README.md) |
+| 3 | Prompt Engineering & Evaluation | **Domain 4** — Prompt Engineering & Structured Output | 20% | [Domain4_…/prompt_engineering/](Domain4_PromptEngineering_StructuredOutput_20pct/prompt_engineering/README.md) |
+| 4 | Tool Use (Function Calling) | **Domain 2** — Tool Design & MCP Integration | 18% | [Domain2_…/tool_use/](Domain2_ToolDesign_MCP_18pct/tool_use/README.md) |
+| 5 | Retrieval Augmented Generation | **Domain 5** — Context Management & Reliability | 15% | [Domain5_ContextMgmt_Reliability_15pct/](Domain5_ContextMgmt_Reliability_15pct/README.md) |
+| 6 | Model Context Protocol (MCP) | **Domain 2** — Tool Design & MCP Integration | 18% | [Domain2_…/mcp/](Domain2_ToolDesign_MCP_18pct/mcp/README.md) |
+| 7 | Agents & Workflows | **Domain 1** — Agent Architecture & Orchestration | 27% | [Domain1_AgentArchitecture_27pct/](Domain1_AgentArchitecture_27pct/README.md) |
+| 8 | Claude Code & Computer Use | **Domain 3** — Claude Code Configuration & Workflows | 20% | [Domain3_ClaudeCode_Workflows_20pct/](Domain3_ClaudeCode_Workflows_20pct/README.md) |
+| 9 | Exam Prep (glossary + 90 practice Qs across 3 sets + checklist) | All domains | — | [Phase9_ExamPrep/](Phase9_ExamPrep/README.md) |
+| **10** | **Advanced Capstone (5 production projects + gotchas + 25 architecture exercises)** | All domains, deepened | — | [Phase10_Advanced_Capstone/](Phase10_Advanced_Capstone/README.md) |
+
+> See [LAB_GUIDE.md](LAB_GUIDE.md) for the domain-by-domain hands-on lab walkthrough that combines these modules into exam-style scenarios.
 
 Each phase folder contains:
 - `README.md` — concepts, diagrams, **real-world scenario**, examples, exercises, mini quiz

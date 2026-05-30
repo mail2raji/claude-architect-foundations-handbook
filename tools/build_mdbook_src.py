@@ -1,10 +1,15 @@
 """
 Build the mdBook source tree under `mdbook/src/` from the canonical chapter
-folders (Phase0_Setup/, Phase1_Foundations/, ...).
+folders.
 
-The source folders stay as-is so readers browsing GitHub still see the layout
-they already know. This script is the bridge: it copies the right chapter
-content into mdBook's expected `src/` directory and writes `SUMMARY.md`.
+The source folders are now organised by Claude Certified Architect — Foundations
+exam domain (Domain1_AgentArchitecture_27pct/, Domain2_ToolDesign_MCP_18pct/, ...).
+Pre-domain (Phase0_Setup, Phase1_Foundations) and post-domain (Phase9_ExamPrep,
+Phase10_Advanced_Capstone) folders keep their original Phase names.
+
+The source folders stay as-is so readers browsing GitHub see the layout they
+expect. This script is the bridge: it copies the right chapter content into
+mdBook's expected `src/` directory and writes `SUMMARY.md`.
 
 Run locally:
     python tools/build_mdbook_src.py
@@ -23,16 +28,19 @@ ROOT = Path(__file__).resolve().parent.parent
 SRC = ROOT / "mdbook" / "src"
 
 # (chapter_no, source_dir, chapter_title, extras_in_order)
+# Chapter order now follows the Claude Certified Architect — Foundations exam domains.
+# Each subfolder under a Domain*/ root is rendered as its own chapter so the
+# builder can keep its one-folder-per-chapter contract.
 CHAPTERS: list[tuple[str, str, str, list[str]]] = [
-    ("1",  "Phase0_Setup",                       "Setup and your first API call",        []),
-    ("2",  "Phase1_Foundations",                 "Claude and GenAI foundations",         []),
-    ("3",  "Phase2_API_Basics",                  "Working with the Claude API",          ["exercises.md"]),
-    ("4",  "Phase3_Prompt_Engineering",          "Prompt engineering and evaluation",    ["exercises.md"]),
-    ("5",  "Phase4_Tool_Use",                    "Tool use (function calling)",          ["exercises.md"]),
-    ("6",  "Phase5_RAG",                         "Retrieval-augmented generation",       ["exercises.md"]),
-    ("7",  "Phase6_MCP",                         "Model Context Protocol (MCP)",         ["01_mcp_concepts.md", "exercises.md"]),
-    ("8",  "Phase7_Agentic_AI",                  "Agents and workflows",                 ["01_workflows_vs_agents.md", "exercises.md"]),
-    ("9",  "Phase8_Claude_Code_Computer_Use",    "Claude Code and Computer Use",         []),
+    ("1", "Phase0_Setup",                                                         "Setup and your first API call",                          []),
+    ("2", "Phase1_Foundations",                                                   "Claude and GenAI foundations",                           []),
+    ("3", "Domain4_PromptEngineering_StructuredOutput_20pct/api_basics",          "Domain 4a \u2014 Working with the Claude API",          ["exercises.md"]),
+    ("4", "Domain4_PromptEngineering_StructuredOutput_20pct/prompt_engineering",  "Domain 4b \u2014 Prompt engineering and evaluation",    ["exercises.md"]),
+    ("5", "Domain2_ToolDesign_MCP_18pct/tool_use",                                "Domain 2a \u2014 Tool use (function calling)",          ["exercises.md"]),
+    ("6", "Domain5_ContextMgmt_Reliability_15pct",                                "Domain 5 \u2014 Context management & retrieval (RAG)",  ["exercises.md"]),
+    ("7", "Domain2_ToolDesign_MCP_18pct/mcp",                                     "Domain 2b \u2014 Model Context Protocol (MCP)",         ["01_mcp_concepts.md", "exercises.md"]),
+    ("8", "Domain1_AgentArchitecture_27pct",                                      "Domain 1 \u2014 Agent architecture & orchestration",    ["01_workflows_vs_agents.md", "exercises.md"]),
+    ("9", "Domain3_ClaudeCode_Workflows_20pct",                                   "Domain 3 \u2014 Claude Code configuration & workflows", []),
 ]
 
 APPENDICES: list[tuple[str, str, str, list[str]]] = [

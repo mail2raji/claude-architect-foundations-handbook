@@ -1,4 +1,6 @@
-# Phase 4 — Tool Use (Function Calling)
+# Domain 2a — Tool Use (Function Calling)
+
+*Was Phase 4.* See the parent [Domain 2 README](../README.md) for the full Tool + MCP context. **Cert weight: part of Domain 2 (18%).**
 
 **Maps to:** Skilljar "Tool use with Claude" (14 lessons). **Exam weight: ~15%.**
 **Goal:** Let Claude call your Python functions to do things it can't do alone (fetch data, run calculations, take actions).
@@ -123,4 +125,4 @@ This is one short step away from a full Phase-7 ReAct agent.
 
 ## 4.9 Exercises & mini quiz → [`exercises.md`](exercises.md)
 
-Next → [Phase 5: RAG](../Phase5_RAG/README.md)
+Next → [Domain 2b: MCP](../mcp/README.md) · then [Domain 5: Context Management & RAG](../../Domain5_ContextMgmt_Reliability_15pct/README.md)

@@ -104,11 +104,11 @@ Open [`BOOK.md`](../BOOK.md) and read it cover-to-cover on GitHub. Every chapter
 
 ## Mode 2 — Run the chapters
 
-Each chapter has its own folder ([`Phase0_Setup/`](../Phase0_Setup/README.md), [`Phase1_Foundations/`](../Phase1_Foundations/README.md), …) with a chapter README, runnable `*.py` files, and an `exercises.md`. Clone the repo, set up the environment, run each sample.
+Each chapter has its own folder. The pre-domain modules keep their `Phase*` names ([`Phase0_Setup/`](../Phase0_Setup/README.md), [`Phase1_Foundations/`](../Phase1_Foundations/README.md)), the five exam-domain modules use `Domain*` names (see layout below), and exam prep + capstone keep their `Phase*` names. Each folder contains a chapter README, runnable `*.py` files, and (usually) an `exercises.md`.
 
 ## Mode 3 — Treat it as exam prep
 
-Skip to [`Phase9_ExamPrep/`](../Phase9_ExamPrep/README.md) for glossary, three mock exams (90 questions total), and a per-phase checklist. Then deepen with [`Phase10_Advanced_Capstone/`](../Phase10_Advanced_Capstone/README.md).
+Skip to [`Phase9_ExamPrep/`](../Phase9_ExamPrep/README.md) for glossary, three mock exams (90 questions total), and a per-domain checklist. Then deepen with [`Phase10_Advanced_Capstone/`](../Phase10_Advanced_Capstone/README.md). Also see [`LAB_GUIDE.md`](../LAB_GUIDE.md) for a full domain-by-domain lab walkthrough.
 
 ## Required setup
 
@@ -129,20 +129,23 @@ If you run every code sample once, the total Anthropic spend is typically under 
 ├── README.md                     repo landing page
 ├── SETUP.md                      environment setup
 ├── EXAM_BLUEPRINT.md             exam domain weights & checklist
+├── LAB_GUIDE.md                  domain-by-domain hands-on labs
 ├── requirements.txt
 ├── book/                         book front matter (preface, etc.)
-├── Phase0_Setup/                 Chapter 1
-├── Phase1_Foundations/           Chapter 2
-├── Phase2_API_Basics/            Chapter 3
-├── Phase3_Prompt_Engineering/    Chapter 4
-├── Phase4_Tool_Use/              Chapter 5
-├── Phase5_RAG/                   Chapter 6
-├── Phase6_MCP/                   Chapter 7
-├── Phase7_Agentic_AI/            Chapter 8
-├── Phase8_Claude_Code_Computer_Use/  Chapter 9
-├── Phase9_ExamPrep/              Chapter 10 (Appendix A)
-├── Phase10_Advanced_Capstone/    Chapter 11 (Appendix B)
-└── tools/                        BOOK.md builder script
+├── Phase0_Setup/                                              Chapter 1  (pre-domain)
+├── Phase1_Foundations/                                        Chapter 2  (pre-domain)
+├── Domain4_PromptEngineering_StructuredOutput_20pct/          Chapters 3–4  (Domain 4, 20%)
+│   ├── api_basics/
+│   └── prompt_engineering/
+├── Domain2_ToolDesign_MCP_18pct/                              Chapters 5 & 7  (Domain 2, 18%)
+│   ├── tool_use/
+│   └── mcp/
+├── Domain5_ContextMgmt_Reliability_15pct/                     Chapter 6  (Domain 5, 15%)
+├── Domain1_AgentArchitecture_27pct/                           Chapter 8  (Domain 1, 27%)
+├── Domain3_ClaudeCode_Workflows_20pct/                        Chapter 9  (Domain 3, 20%)
+├── Phase9_ExamPrep/                                           Appendix A
+├── Phase10_Advanced_Capstone/                                 Appendix B
+└── tools/                        BOOK.md & mdbook builder scripts
 ```
 
 
@@ -162,13 +165,13 @@ If you run every code sample once, the total Anthropic spend is typically under 
 
 - [Chapter 1. Setup and your first API call](#chapter-1-setup-and-your-first-api-call)
 - [Chapter 2. Claude and GenAI foundations](#chapter-2-claude-and-genai-foundations)
-- [Chapter 3. Working with the Claude API](#chapter-3-working-with-the-claude-api)
-- [Chapter 4. Prompt engineering and evaluation](#chapter-4-prompt-engineering-and-evaluation)
-- [Chapter 5. Tool use (function calling)](#chapter-5-tool-use-function-calling)
-- [Chapter 6. Retrieval-augmented generation](#chapter-6-retrieval-augmented-generation)
-- [Chapter 7. Model Context Protocol (MCP)](#chapter-7-model-context-protocol-mcp)
-- [Chapter 8. Agents and workflows](#chapter-8-agents-and-workflows)
-- [Chapter 9. Claude Code and Computer Use](#chapter-9-claude-code-and-computer-use)
+- [Chapter 3. Domain 4a — Working with the Claude API](#chapter-3-domain-4a-working-with-the-claude-api)
+- [Chapter 4. Domain 4b — Prompt engineering and evaluation](#chapter-4-domain-4b-prompt-engineering-and-evaluation)
+- [Chapter 5. Domain 2a — Tool use (function calling)](#chapter-5-domain-2a-tool-use-function-calling)
+- [Chapter 6. Domain 5 — Context management & retrieval (RAG)](#chapter-6-domain-5-context-management-retrieval-rag)
+- [Chapter 7. Domain 2b — Model Context Protocol (MCP)](#chapter-7-domain-2b-model-context-protocol-mcp)
+- [Chapter 8. Domain 1 — Agent architecture & orchestration](#chapter-8-domain-1-agent-architecture-orchestration)
+- [Chapter 9. Domain 3 — Claude Code configuration & workflows](#chapter-9-domain-3-claude-code-configuration-workflows)
 
 ## Appendices
 
@@ -328,20 +331,22 @@ In your own words, answer in a notebook or `notes.md`:
 - Know that **Constitutional AI** is Anthropic's safety method.
 - Know the difference between **claude.ai** (consumer), **API** (developer), **Bedrock/Vertex** (enterprise cloud).
 
-Next → [Phase 2: Working with the Claude API](../Phase2_API_Basics/README.md)
+Next → [Domain 4a: Working with the Claude API](../Domain4_PromptEngineering_StructuredOutput_20pct/api_basics/README.md)
 
 
 ---
 
 
 
-<a id='chapter-3-working-with-the-claude-api'></a>
+<a id='chapter-3-domain-4a-working-with-the-claude-api'></a>
 
-# Chapter 3. Working with the Claude API
+# Chapter 3. Domain 4a — Working with the Claude API
 
-> Source folder: [`Phase2_API_Basics/`](Phase2_API_Basics/README.md)
+> Source folder: [`Domain4_PromptEngineering_StructuredOutput_20pct/api_basics/`](Domain4_PromptEngineering_StructuredOutput_20pct/api_basics/README.md)
 
-## Phase 2 — Working with the Claude API
+## Domain 4a — Working with the Claude API
+
+*Was Phase 2.* See the parent [Domain 4 README](../README.md) for the full API + Prompt context. **Cert weight: part of Domain 4 (20%).**
 
 **Maps to:** Skilljar "Getting started with Claude" (16 lessons). **Exam weight: ~15%.**
 **Goal:** Confidently call the Messages API for chat, streaming, vision, and structured output.
@@ -459,7 +464,7 @@ See [`exercises.md`](exercises.md).
 
 Answers at the bottom of [`exercises.md`](exercises.md).
 
-Next → [Phase 3: Prompt Engineering & Evaluation](../Phase3_Prompt_Engineering/README.md)
+Next → [Domain 4b: Prompt Engineering & Evaluation](../prompt_engineering/README.md)
 
 
 ## Exercises
@@ -489,26 +494,28 @@ Try each. The hint columns are intentionally light — peek only if stuck.
 
 ## Code samples in this chapter
 
-- [`01_first_message.py`](Phase2_API_Basics/01_first_message.py)
-- [`02_multi_turn.py`](Phase2_API_Basics/02_multi_turn.py)
-- [`03_system_prompt.py`](Phase2_API_Basics/03_system_prompt.py)
-- [`04_streaming.py`](Phase2_API_Basics/04_streaming.py)
-- [`05_structured_output.py`](Phase2_API_Basics/05_structured_output.py)
-- [`06_vision.py`](Phase2_API_Basics/06_vision.py)
-- [`07_stop_reasons_and_errors.py`](Phase2_API_Basics/07_stop_reasons_and_errors.py)
+- [`01_first_message.py`](Domain4_PromptEngineering_StructuredOutput_20pct/api_basics/01_first_message.py)
+- [`02_multi_turn.py`](Domain4_PromptEngineering_StructuredOutput_20pct/api_basics/02_multi_turn.py)
+- [`03_system_prompt.py`](Domain4_PromptEngineering_StructuredOutput_20pct/api_basics/03_system_prompt.py)
+- [`04_streaming.py`](Domain4_PromptEngineering_StructuredOutput_20pct/api_basics/04_streaming.py)
+- [`05_structured_output.py`](Domain4_PromptEngineering_StructuredOutput_20pct/api_basics/05_structured_output.py)
+- [`06_vision.py`](Domain4_PromptEngineering_StructuredOutput_20pct/api_basics/06_vision.py)
+- [`07_stop_reasons_and_errors.py`](Domain4_PromptEngineering_StructuredOutput_20pct/api_basics/07_stop_reasons_and_errors.py)
 
 
 ---
 
 
 
-<a id='chapter-4-prompt-engineering-and-evaluation'></a>
+<a id='chapter-4-domain-4b-prompt-engineering-and-evaluation'></a>
 
-# Chapter 4. Prompt engineering and evaluation
+# Chapter 4. Domain 4b — Prompt engineering and evaluation
 
-> Source folder: [`Phase3_Prompt_Engineering/`](Phase3_Prompt_Engineering/README.md)
+> Source folder: [`Domain4_PromptEngineering_StructuredOutput_20pct/prompt_engineering/`](Domain4_PromptEngineering_StructuredOutput_20pct/prompt_engineering/README.md)
 
-## Phase 3 — Prompt Engineering & Evaluation
+## Domain 4b — Prompt Engineering & Evaluation
+
+*Was Phase 3.* See the parent [Domain 4 README](../README.md) for the full API + Prompt context. **Cert weight: part of Domain 4 (20%).**
 
 **Maps to:** Skilljar "Prompt engineering & evaluation" (16 lessons). **Exam weight: ~22% combined.**
 **Goal:** Write reliable prompts AND prove they work with automated evals.
@@ -651,7 +658,7 @@ See [`exercises.md`](exercises.md).
 
 Answers at the bottom of [`exercises.md`](exercises.md).
 
-Next → [Phase 4: Tool Use](../Phase4_Tool_Use/README.md)
+Next → [Domain 2a: Tool Use](../../Domain2_ToolDesign_MCP_18pct/tool_use/README.md)
 
 
 ## Exercises
@@ -674,25 +681,27 @@ Next → [Phase 4: Tool Use](../Phase4_Tool_Use/README.md)
 
 ## Code samples in this chapter
 
-- [`01_xml_tags.py`](Phase3_Prompt_Engineering/01_xml_tags.py)
-- [`02_few_shot.py`](Phase3_Prompt_Engineering/02_few_shot.py)
-- [`03_chain_of_thought.py`](Phase3_Prompt_Engineering/03_chain_of_thought.py)
-- [`04_prefilling.py`](Phase3_Prompt_Engineering/04_prefilling.py)
-- [`05_eval_framework.py`](Phase3_Prompt_Engineering/05_eval_framework.py)
-- [`06_llm_judge.py`](Phase3_Prompt_Engineering/06_llm_judge.py)
+- [`01_xml_tags.py`](Domain4_PromptEngineering_StructuredOutput_20pct/prompt_engineering/01_xml_tags.py)
+- [`02_few_shot.py`](Domain4_PromptEngineering_StructuredOutput_20pct/prompt_engineering/02_few_shot.py)
+- [`03_chain_of_thought.py`](Domain4_PromptEngineering_StructuredOutput_20pct/prompt_engineering/03_chain_of_thought.py)
+- [`04_prefilling.py`](Domain4_PromptEngineering_StructuredOutput_20pct/prompt_engineering/04_prefilling.py)
+- [`05_eval_framework.py`](Domain4_PromptEngineering_StructuredOutput_20pct/prompt_engineering/05_eval_framework.py)
+- [`06_llm_judge.py`](Domain4_PromptEngineering_StructuredOutput_20pct/prompt_engineering/06_llm_judge.py)
 
 
 ---
 
 
 
-<a id='chapter-5-tool-use-function-calling'></a>
+<a id='chapter-5-domain-2a-tool-use-function-calling'></a>
 
-# Chapter 5. Tool use (function calling)
+# Chapter 5. Domain 2a — Tool use (function calling)
 
-> Source folder: [`Phase4_Tool_Use/`](Phase4_Tool_Use/README.md)
+> Source folder: [`Domain2_ToolDesign_MCP_18pct/tool_use/`](Domain2_ToolDesign_MCP_18pct/tool_use/README.md)
 
-## Phase 4 — Tool Use (Function Calling)
+## Domain 2a — Tool Use (Function Calling)
+
+*Was Phase 4.* See the parent [Domain 2 README](../README.md) for the full Tool + MCP context. **Cert weight: part of Domain 2 (18%).**
 
 **Maps to:** Skilljar "Tool use with Claude" (14 lessons). **Exam weight: ~15%.**
 **Goal:** Let Claude call your Python functions to do things it can't do alone (fetch data, run calculations, take actions).
@@ -817,7 +826,7 @@ This is one short step away from a full Phase-7 ReAct agent.
 
 ### 4.9 Exercises & mini quiz → [`exercises.md`](exercises.md)
 
-Next → [Phase 5: RAG](../Phase5_RAG/README.md)
+Next → [Domain 2b: MCP](../mcp/README.md) · then [Domain 5: Context Management & RAG](../../Domain5_ContextMgmt_Reliability_15pct/README.md)
 
 
 ## Exercises
@@ -847,24 +856,26 @@ Next → [Phase 5: RAG](../Phase5_RAG/README.md)
 
 ## Code samples in this chapter
 
-- [`01_function_calling.py`](Phase4_Tool_Use/01_function_calling.py)
-- [`02_multi_turn_tools.py`](Phase4_Tool_Use/02_multi_turn_tools.py)
-- [`03_parallel_tools.py`](Phase4_Tool_Use/03_parallel_tools.py)
-- [`04_it_triage_agent.py`](Phase4_Tool_Use/04_it_triage_agent.py)
-- [`05_builtin_web_search.py`](Phase4_Tool_Use/05_builtin_web_search.py)
+- [`01_function_calling.py`](Domain2_ToolDesign_MCP_18pct/tool_use/01_function_calling.py)
+- [`02_multi_turn_tools.py`](Domain2_ToolDesign_MCP_18pct/tool_use/02_multi_turn_tools.py)
+- [`03_parallel_tools.py`](Domain2_ToolDesign_MCP_18pct/tool_use/03_parallel_tools.py)
+- [`04_it_triage_agent.py`](Domain2_ToolDesign_MCP_18pct/tool_use/04_it_triage_agent.py)
+- [`05_builtin_web_search.py`](Domain2_ToolDesign_MCP_18pct/tool_use/05_builtin_web_search.py)
 
 
 ---
 
 
 
-<a id='chapter-6-retrieval-augmented-generation'></a>
+<a id='chapter-6-domain-5-context-management-retrieval-rag'></a>
 
-# Chapter 6. Retrieval-augmented generation
+# Chapter 6. Domain 5 — Context management & retrieval (RAG)
 
-> Source folder: [`Phase5_RAG/`](Phase5_RAG/README.md)
+> Source folder: [`Domain5_ContextMgmt_Reliability_15pct/`](Domain5_ContextMgmt_Reliability_15pct/README.md)
 
-## Phase 5 — Retrieval Augmented Generation (RAG)
+## Domain 5 — Context Management & Reliability (RAG)
+
+*Was Phase 5.* **Cert weight: 15%.**
 
 **Maps to:** Skilljar "Retrieval augmented generation" (10 lessons). **Exam weight: ~12%.**
 **Goal:** Give Claude domain knowledge it wasn't trained on — accurately and cheaply.
@@ -969,7 +980,7 @@ Before embedding/BM25-indexing a chunk, **prefix the chunk with a 1-paragraph Cl
 
 ### 5.7 Exercises & mini quiz → [`exercises.md`](exercises.md)
 
-Next → [Phase 6: Model Context Protocol](../Phase6_MCP/README.md)
+Next → [Domain 2b: Model Context Protocol](../Domain2_ToolDesign_MCP_18pct/mcp/README.md)
 
 
 ## Exercises
@@ -999,25 +1010,27 @@ Next → [Phase 6: Model Context Protocol](../Phase6_MCP/README.md)
 
 ## Code samples in this chapter
 
-- [`01_chunking.py`](Phase5_RAG/01_chunking.py)
-- [`02_embeddings_and_search.py`](Phase5_RAG/02_embeddings_and_search.py)
-- [`03_hybrid_bm25.py`](Phase5_RAG/03_hybrid_bm25.py)
-- [`04_reranking.py`](Phase5_RAG/04_reranking.py)
-- [`05_contextual_retrieval.py`](Phase5_RAG/05_contextual_retrieval.py)
-- [`mini_project_kb_qa.py`](Phase5_RAG/mini_project_kb_qa.py)
+- [`01_chunking.py`](Domain5_ContextMgmt_Reliability_15pct/01_chunking.py)
+- [`02_embeddings_and_search.py`](Domain5_ContextMgmt_Reliability_15pct/02_embeddings_and_search.py)
+- [`03_hybrid_bm25.py`](Domain5_ContextMgmt_Reliability_15pct/03_hybrid_bm25.py)
+- [`04_reranking.py`](Domain5_ContextMgmt_Reliability_15pct/04_reranking.py)
+- [`05_contextual_retrieval.py`](Domain5_ContextMgmt_Reliability_15pct/05_contextual_retrieval.py)
+- [`mini_project_kb_qa.py`](Domain5_ContextMgmt_Reliability_15pct/mini_project_kb_qa.py)
 
 
 ---
 
 
 
-<a id='chapter-7-model-context-protocol-mcp'></a>
+<a id='chapter-7-domain-2b-model-context-protocol-mcp'></a>
 
-# Chapter 7. Model Context Protocol (MCP)
+# Chapter 7. Domain 2b — Model Context Protocol (MCP)
 
-> Source folder: [`Phase6_MCP/`](Phase6_MCP/README.md)
+> Source folder: [`Domain2_ToolDesign_MCP_18pct/mcp/`](Domain2_ToolDesign_MCP_18pct/mcp/README.md)
 
-## Phase 6 — Model Context Protocol (MCP)
+## Domain 2b — Model Context Protocol (MCP)
+
+*Was Phase 6.* See the parent [Domain 2 README](../README.md) for the full Tool + MCP context. **Cert weight: part of Domain 2 (18%).**
 
 **Maps to:** Skilljar "Model Context Protocol (MCP)" (12 lessons) + the dedicated **MCP fundamentals** course (16 lessons). **Exam weight: ~10%.**
 **Goal:** Build and consume MCP **servers** and **clients** so any Claude app can plug in your data and tools without bespoke glue code.
@@ -1112,7 +1125,7 @@ You add it to the client's config file:
   "mcpServers": {
     "my-server": {
       "command": "python",
-      "args": ["C:\\Scripts\\Send-escalationEmail\\Claude_Learning\\Phase6_MCP\\02_mcp_server.py"]
+      "args": ["C:\\Scripts\\Send-escalationEmail\\Claude_Learning\\Domain2_ToolDesign_MCP_18pct/mcp/\02_mcp_server.py"]
     }
   }
 }
@@ -1169,15 +1182,15 @@ We implement this end-to-end in `03_mcp_client.py` and then **bridge it to Claud
 cd Claude_Learning
 .\.venv\Scripts\Activate.ps1
 # Terminal 1: nothing — the client launches the server as a subprocess.
-python Phase6_MCP\03_mcp_client.py
-python Phase6_MCP\04_bridge_mcp_to_claude.py
+python Domain2_ToolDesign_MCP_18pct/mcp/03_mcp_client.py
+python Domain2_ToolDesign_MCP_18pct/mcp/04_bridge_mcp_to_claude.py
 ```
 
 ---
 
 ### 6.9 Exercises & mini quiz → [`exercises.md`](exercises.md)
 
-Next → [Phase 7: Agentic AI](../Phase7_Agentic_AI/README.md)
+Next → [Domain 1: Agent Architecture & Orchestration](../../Domain1_AgentArchitecture_27pct/README.md)
 
 
 ## 01 Mcp Concepts
@@ -1260,23 +1273,25 @@ Each server announces what it supports in `initialize`:
 
 ## Code samples in this chapter
 
-- [`02_mcp_server.py`](Phase6_MCP/02_mcp_server.py)
-- [`03_mcp_client.py`](Phase6_MCP/03_mcp_client.py)
-- [`04_bridge_mcp_to_claude.py`](Phase6_MCP/04_bridge_mcp_to_claude.py)
-- [`mini_project_soc_mcp.py`](Phase6_MCP/mini_project_soc_mcp.py)
+- [`02_mcp_server.py`](Domain2_ToolDesign_MCP_18pct/mcp/02_mcp_server.py)
+- [`03_mcp_client.py`](Domain2_ToolDesign_MCP_18pct/mcp/03_mcp_client.py)
+- [`04_bridge_mcp_to_claude.py`](Domain2_ToolDesign_MCP_18pct/mcp/04_bridge_mcp_to_claude.py)
+- [`mini_project_soc_mcp.py`](Domain2_ToolDesign_MCP_18pct/mcp/mini_project_soc_mcp.py)
 
 
 ---
 
 
 
-<a id='chapter-8-agents-and-workflows'></a>
+<a id='chapter-8-domain-1-agent-architecture-orchestration'></a>
 
-# Chapter 8. Agents and workflows
+# Chapter 8. Domain 1 — Agent architecture & orchestration
 
-> Source folder: [`Phase7_Agentic_AI/`](Phase7_Agentic_AI/README.md)
+> Source folder: [`Domain1_AgentArchitecture_27pct/`](Domain1_AgentArchitecture_27pct/README.md)
 
-## Phase 7 — Agents & Workflows
+## Domain 1 — Agent Architecture & Orchestration
+
+*Was Phase 7.* **Cert weight: 27% (the heaviest domain).**
 
 **Maps to:** Skilljar "Agents and workflows" (11 lessons). **Exam weight: ~12%.**
 **Goal:** Choose the right architecture for an autonomous Claude system and implement it.
@@ -1413,7 +1428,7 @@ You build a compressed version in [`mini_project_research_agent.py`](mini_projec
 
 ### 7.7 Exercises & mini quiz → [`exercises.md`](exercises.md)
 
-Next → [Phase 8: Claude Code & Computer Use](../Phase8_Claude_Code_Computer_Use/README.md)
+Next → [Domain 3: Claude Code Configuration & Workflows](../Domain3_ClaudeCode_Workflows_20pct/README.md)
 
 
 ## 01 Workflows Vs Agents
@@ -1475,26 +1490,29 @@ Common pattern: cheap classifier (Haiku) → main reasoner (Sonnet) → final ju
 
 ## Code samples in this chapter
 
-- [`02_chain_workflow.py`](Phase7_Agentic_AI/02_chain_workflow.py)
-- [`03_router_workflow.py`](Phase7_Agentic_AI/03_router_workflow.py)
-- [`04_parallel_workflow.py`](Phase7_Agentic_AI/04_parallel_workflow.py)
-- [`05_orchestrator_workers.py`](Phase7_Agentic_AI/05_orchestrator_workers.py)
-- [`06_evaluator_optimizer.py`](Phase7_Agentic_AI/06_evaluator_optimizer.py)
-- [`07_react_agent.py`](Phase7_Agentic_AI/07_react_agent.py)
-- [`mini_project_research_agent.py`](Phase7_Agentic_AI/mini_project_research_agent.py)
+- [`02_chain_workflow.py`](Domain1_AgentArchitecture_27pct/02_chain_workflow.py)
+- [`03_router_workflow.py`](Domain1_AgentArchitecture_27pct/03_router_workflow.py)
+- [`04_parallel_workflow.py`](Domain1_AgentArchitecture_27pct/04_parallel_workflow.py)
+- [`05_orchestrator_workers.py`](Domain1_AgentArchitecture_27pct/05_orchestrator_workers.py)
+- [`06_evaluator_optimizer.py`](Domain1_AgentArchitecture_27pct/06_evaluator_optimizer.py)
+- [`07_react_agent.py`](Domain1_AgentArchitecture_27pct/07_react_agent.py)
+- [`08_agent_loop_with_escalation.py`](Domain1_AgentArchitecture_27pct/08_agent_loop_with_escalation.py)
+- [`mini_project_research_agent.py`](Domain1_AgentArchitecture_27pct/mini_project_research_agent.py)
 
 
 ---
 
 
 
-<a id='chapter-9-claude-code-and-computer-use'></a>
+<a id='chapter-9-domain-3-claude-code-configuration-workflows'></a>
 
-# Chapter 9. Claude Code and Computer Use
+# Chapter 9. Domain 3 — Claude Code configuration & workflows
 
-> Source folder: [`Phase8_Claude_Code_Computer_Use/`](Phase8_Claude_Code_Computer_Use/README.md)
+> Source folder: [`Domain3_ClaudeCode_Workflows_20pct/`](Domain3_ClaudeCode_Workflows_20pct/README.md)
 
-## Phase 8 — Claude Code & Computer Use
+## Domain 3 — Claude Code Configuration & Workflows
+
+*Was Phase 8.* **Cert weight: 20%.**
 
 **Maps to:** Skilljar "Claude Code & Computer Use" (8 lessons). **Exam weight: ~3%.**
 **Goal:** Awareness-level understanding of two Anthropic-built agentic surfaces.

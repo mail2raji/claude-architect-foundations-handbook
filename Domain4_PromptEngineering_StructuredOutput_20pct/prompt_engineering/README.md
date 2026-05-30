@@ -1,4 +1,6 @@
-# Phase 3 — Prompt Engineering & Evaluation
+# Domain 4b — Prompt Engineering & Evaluation
+
+*Was Phase 3.* See the parent [Domain 4 README](../README.md) for the full API + Prompt context. **Cert weight: part of Domain 4 (20%).**
 
 **Maps to:** Skilljar "Prompt engineering & evaluation" (16 lessons). **Exam weight: ~22% combined.**
 **Goal:** Write reliable prompts AND prove they work with automated evals.
@@ -141,4 +143,4 @@ See [`exercises.md`](exercises.md).
 
 Answers at the bottom of [`exercises.md`](exercises.md).
 
-Next → [Phase 4: Tool Use](../Phase4_Tool_Use/README.md)
+Next → [Domain 2a: Tool Use](../../Domain2_ToolDesign_MCP_18pct/tool_use/README.md)
