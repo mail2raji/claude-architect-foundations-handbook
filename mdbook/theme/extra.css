@@ -17,6 +17,37 @@
   --ccaf-accent:   #38bdf8;       /* sky-400 */
   --ccaf-amber:    #fbbf24;       /* contrast accent */
   --ccaf-shadow:   0 8px 28px rgba(7, 22, 53, 0.18);
+  /* mdBook reads --content-max-width on :root; widen the reading column. */
+  --content-max-width: 1200px;
+  --page-padding: 15px;
+}
+
+/* ---------------------------------------------------------
+   0. Layout — reclaim the whitespace on the left & right
+   --------------------------------------------------------- */
+
+/* mdBook centres .content inside .page; bump both so we span the viewport. */
+.page {
+  max-width: none !important;
+}
+.content {
+  max-width: var(--content-max-width) !important;
+  margin-left: auto;
+  margin-right: auto;
+  padding-left: 1.25rem;
+  padding-right: 1.25rem;
+}
+.content main {
+  max-width: none !important;
+  padding: 0 !important;
+}
+
+/* On wide monitors give the prose even more room (1400px viewport+). */
+@media (min-width: 1400px) {
+  :root { --content-max-width: 1320px; }
+}
+@media (min-width: 1700px) {
+  :root { --content-max-width: 1480px; }
 }
 
 /* ---------------------------------------------------------
@@ -116,8 +147,17 @@
 }
 
 /* ---------------------------------------------------------
-   3. Tables — blue header, soft zebra stripes
+   3. Tables — blue header, soft zebra stripes, full width
    --------------------------------------------------------- */
+.content table {
+  width: 100%;
+  display: table;            /* override mdBook's inline-block default */
+  table-layout: auto;
+  border-collapse: collapse;
+  margin: 1rem 0 1.4rem;
+  overflow-wrap: anywhere;   /* break long words instead of widening cells */
+  word-break: normal;
+}
 .content table thead {
   background: linear-gradient(180deg, var(--ccaf-blue-500), var(--ccaf-navy-700));
 }
@@ -126,13 +166,31 @@
   color: #ffffff !important;
   font-weight: 700;
   border-color: var(--ccaf-navy-700);
+  padding: 0.55rem 0.75rem;
+  text-align: left;
 }
 .content table td,
 .content table th {
   border: 1px solid var(--table-border-color);
+  padding: 0.55rem 0.75rem;
+  vertical-align: top;
+  line-height: 1.45;
 }
 .content table tr:nth-child(even) td {
   background: var(--table-alternate-bg);
+}
+
+/* "Code samples & lab guides" table — keep the #/script/lab columns
+   narrow so the wide 'What it does' column gets the breathing room. */
+.content table th:first-child,
+.content table td:first-child {
+  white-space: nowrap;
+  width: 1%;
+  text-align: center;
+}
+.content table code {
+  white-space: nowrap;
+  font-size: 0.88em;
 }
 
 /* ---------------------------------------------------------
