@@ -1,5 +1,3 @@
-# Phase 4 — Exercises
-
 1. Add a `delete_ticket(ticket_id)` tool to `04_it_triage_agent.py` but guard it with `tool_choice={"type":"none"}` initially. Then change `tool_choice` to `auto` and ask Claude to delete a freshly created ticket. Inspect how it reasons.
 2. Modify `02_multi_turn_tools.py` to print each `tool_use` with timing info.
 3. In `03_parallel_tools.py`, change one of the cities to an invalid name and return `{"error": "unknown city"}`. Watch Claude react.

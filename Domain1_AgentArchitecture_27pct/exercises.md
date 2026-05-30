@@ -1,5 +1,3 @@
-# Phase 7 — Exercises
-
 1. Take a real PowerShell task you do at work (e.g. "find SPNs about to expire"). Sketch which pattern fits — chain, router, parallel, orchestrator, evaluator-optimizer, or autonomous? Write one paragraph justification.
 2. In `07_react_agent.py`, add a `max_cost_usd` budget that estimates token cost per step (use approximate per-million prices) and stops when exceeded.
 3. Improve `06_evaluator_optimizer.py`: instead of one critic, run **three judges in parallel** and average their scores. Did quality improve?

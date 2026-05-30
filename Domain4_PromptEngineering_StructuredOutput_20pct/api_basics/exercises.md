@@ -1,5 +1,3 @@
-# Phase 2 — Exercises
-
 Try each. The hint columns are intentionally light — peek only if stuck.
 
 | # | Task | Hint |

@@ -1,5 +1,3 @@
-# Phase 3 — Exercises
-
 1. Add a 5th prompt to `05_eval_framework.py` that uses **few-shot** (3 examples) in addition to XML+rules+CoT. Does it beat v4?
 2. Extend the LLM-judge to also output a 1-sentence rationale (`<rationale>`). Save (score, rationale) pairs to a CSV.
 3. Build a "self-critique" loop: ask Claude to draft a reply, then in a 2nd turn ask itself "what could be wrong?", then revise. Compare with a single-shot reply via LLM-judge.

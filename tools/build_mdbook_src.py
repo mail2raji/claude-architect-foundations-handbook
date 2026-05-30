@@ -163,30 +163,116 @@ def list_loose_md(folder: Path) -> list[str]:
     )
 
 
+def lab_one_liner(lab_path: Path) -> str:
+    """Extract the first paragraph under '## What this script does' from a
+    lab guide so it can be shown in the chapter's code-samples table."""
+    if not lab_path.exists():
+        return ""
+    text = lab_path.read_text(encoding="utf-8")
+    m = re.search(r"^##\s+What this script does\s*\n+([^\n#][^\n]*)",
+                  text, re.MULTILINE)
+    if not m:
+        return ""
+    # Collapse internal whitespace, drop pipes (would break a markdown table).
+    line = re.sub(r"\s+", " ", m.group(1)).strip().replace("|", "\\|")
+    return line
+
+
 def code_samples_table(folder: Path, src_dir: str) -> list[str]:
-    """Pair every .py with its .lab.md (if present) in a 3-column table."""
+    """Pair every .py with its .lab.md (if present) in a 4-column table that
+    includes a plain-English one-liner pulled from the lab guide."""
     pys = sorted(p.name for p in folder.glob("*.py"))
     if not pys:
         return []
     base = f"{REPO_BLOB}/{src_dir}"
     out = [
-        "| # | Script | Plain-English lab guide |",
-        "|---|--------|--------------------------|",
+        "| # | Script | What it does | Plain-English lab guide |",
+        "|---|--------|--------------|--------------------------|",
     ]
     for i, py in enumerate(pys, 1):
         lab = py[:-3] + ".lab.md"
-        lab_cell = f"[`{lab}`]({base}/{lab})" if (folder / lab).exists() else "&mdash;"
-        out.append(f"| {i} | [`{py}`]({base}/{py}) | {lab_cell} |")
+        lab_full = folder / lab
+        lab_cell = f"[`{lab}`]({base}/{lab})" if lab_full.exists() else "&mdash;"
+        summary = lab_one_liner(lab_full) or "&mdash;"
+        out.append(f"| {i} | [`{py}`]({base}/{py}) | {summary} | {lab_cell} |")
     return out
 
 
+_README_TITLE_RE = re.compile(r"^#\s+(.+?)\s*$", re.MULTILINE)
+
+
+def strip_duplicate_readme_h1(text: str, chapter_title: str) -> str:
+    """If the README starts with an H1 that restates the chapter title, drop
+    it so the chapter page doesn't show the same heading twice once we
+    shift_headings() it to H2."""
+    m = _README_TITLE_RE.match(text)
+    if not m:
+        return text
+    readme_title = m.group(1).strip()
+    chap_words = re.sub(r"[^\w\s]", " ", chapter_title).lower().split()
+    readme_words = re.sub(r"[^\w\s]", " ", readme_title).lower().split()
+    overlap = len(set(chap_words) & set(readme_words))
+    if overlap >= max(2, len(readme_words) // 2):
+        # Drop the H1 line (and any blank line right after it).
+        rest = text[m.end():]
+        rest = rest.lstrip("\n")
+        return rest
+    return text
+
+
+def number_top_sections(text: str, chapter_no: str,
+                        min_level: int = 2) -> str:
+    """Prefix top-level (H<min_level>) headings with N.K chapter-relative
+    numbering. Headings deeper than min_level are left alone. Code fences
+    are skipped."""
+    out: list[str] = []
+    in_fence = False
+    counter = 0
+    target = "#" * min_level + " "
+    for line in text.splitlines():
+        if line.lstrip().startswith("```"):
+            in_fence = not in_fence
+            out.append(line)
+            continue
+        if not in_fence and line.startswith(target) and not line.startswith(target + "#"):
+            counter += 1
+            heading_text = line[len(target):].lstrip()
+            # Skip auto-numbering for special sections that already have
+            # canonical names like "Code samples", "Capstones", "Exercises".
+            line = f"{target}{chapter_no}.{counter} {heading_text}"
+        out.append(line)
+    return "\n".join(out)
+
+
+def build_mini_toc(text: str, target_level: int = 2) -> list[str]:
+    """Build a small bulleted TOC from H<target_level> headings."""
+    toc: list[str] = []
+    in_fence = False
+    target = "#" * target_level + " "
+    for line in text.splitlines():
+        if line.lstrip().startswith("```"):
+            in_fence = not in_fence
+            continue
+        if not in_fence and line.startswith(target) and not line.startswith(target + "#"):
+            heading = line[len(target):].strip()
+            slug = re.sub(r"[^a-z0-9\s-]", "", heading.lower())
+            slug = re.sub(r"\s+", "-", slug).strip("-")
+            toc.append(f"- [{heading}](#{slug})")
+    return toc
+
+
 def render_folder(parts: list[str], src_dir: str, heading_shift: int,
-                  named_subs: list[str] | None = None) -> None:
+                  named_subs: list[str] | None = None,
+                  chapter_no: str | None = None,
+                  chapter_title: str | None = None) -> None:
     """Inline a Domain folder's README + every loose .md + exercises +
     a code-samples table + named sub-sections + capstones/.
 
     `heading_shift` shifts every heading in inlined documents so they nest
     correctly under the chapter H1 (shift=1 means H1->H2, H2->H3, etc.).
+
+    If `chapter_no` is given, the parent README's H2 sections are
+    auto-renumbered as ``{chapter_no}.K``.
     """
     folder = ROOT / src_dir
     if not folder.exists():
@@ -196,14 +282,31 @@ def render_folder(parts: list[str], src_dir: str, heading_shift: int,
     # 1. Section preamble = README.md
     readme = read(folder / "README.md")
     if readme:
-        parts.append(shift_headings(rewrite_links(readme, src_dir), heading_shift))
+        if chapter_title:
+            readme = strip_duplicate_readme_h1(readme, chapter_title)
+        shifted = shift_headings(rewrite_links(readme, src_dir), heading_shift)
+        if chapter_no:
+            # README's original H2 sections land at H(2 + heading_shift) after
+            # the shift; that's the level we want to auto-number "N.K".
+            shifted = number_top_sections(shifted, chapter_no,
+                                          min_level=2 + heading_shift)
+        parts.append(shifted)
 
     # 2. Loose top-level .md files (alphabetical), each as its own subsection
     for fname in list_loose_md(folder):
         content = read(folder / fname)
         if not content:
             continue
-        pretty = Path(fname).stem.replace("_", " ").title()
+        # Prefer the file's own H1 as the section title; fall back to a
+        # filename-derived label if there's no H1.
+        h1_match = _README_TITLE_RE.match(content)
+        if h1_match:
+            pretty = h1_match.group(1).strip()
+            content = content[h1_match.end():].lstrip("\n")
+        else:
+            pretty = Path(fname).stem.replace("_", " ").title()
+            # Drop a leading numeric prefix like "01 " from the fallback label.
+            pretty = re.sub(r"^\d+\s+", "", pretty)
         parts.append(f"\n\n{'#' * (heading_shift + 1)} {pretty}\n")
         parts.append(shift_headings(rewrite_links(content, src_dir), heading_shift + 1))
 
@@ -217,6 +320,11 @@ def render_folder(parts: list[str], src_dir: str, heading_shift: int,
     table = code_samples_table(folder, src_dir)
     if table:
         parts.append(f"\n\n{'#' * (heading_shift + 1)} Code samples & lab guides\n")
+        parts.append(
+            "Every runnable script ships with a sibling *plain-English lab guide* "
+            "(`.lab.md`) that explains it as if you're seeing the file for the "
+            "first time.\n"
+        )
         parts.extend(table)
 
     # 5. Named sub-sections (rendered in the given order)
@@ -231,6 +339,8 @@ def render_folder(parts: list[str], src_dir: str, heading_shift: int,
             f"[`{sub_src}/`]({REPO_TREE}/{sub_src})\n"
         )
         # Sub-sections never have their own named_subs (avoid deep recursion).
+        # We do *not* auto-renumber sub-section headings — they'd clash with
+        # the parent's N.K scheme.
         render_folder(parts, sub_src, heading_shift + 1, named_subs=[])
 
     # 6. Capstones (auto-discovered if a capstones/ folder exists)
@@ -254,12 +364,26 @@ def write_chapter(no: str, parent_dir: str, title: str,
     out_dir = SRC / f"ch{no.zfill(2)}"
     out_dir.mkdir(parents=True, exist_ok=True)
 
+    # Render the body first so we can build a mini-TOC from the final H2 list.
+    body: list[str] = []
+    render_folder(body, parent_dir, heading_shift=1, named_subs=named_subs,
+                  chapter_no=no, chapter_title=title)
+    body_text = "\n".join(body)
+
+    # Build mini-TOC from the body's H2 headings.
+    toc_lines = build_mini_toc(body_text, target_level=2)
+
     parts: list[str] = [
         f"# Chapter {no}. {title}\n",
         f"*Source folder on GitHub:* "
         f"[`{parent_dir}/`]({REPO_TREE}/{parent_dir})\n",
     ]
-    render_folder(parts, parent_dir, heading_shift=1, named_subs=named_subs)
+    if toc_lines:
+        parts.append("\n**What's in this chapter**\n")
+        parts.extend(toc_lines)
+        parts.append("\n---\n")
+
+    parts.append(body_text)
 
     (out_dir / "index.md").write_text("\n".join(parts), encoding="utf-8")
     return f"ch{no.zfill(2)}/index.md"

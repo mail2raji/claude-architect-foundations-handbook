@@ -9,7 +9,7 @@
 
 ---
 
-## 7.1 Workflows vs Agents (the most important distinction in the exam)
+## Workflows vs Agents (the most important distinction in the exam)
 
 | | Workflow | Agent |
 |---|---|---|
@@ -23,7 +23,7 @@
 
 ---
 
-## 7.2 The 5 workflow patterns
+## The 5 workflow patterns
 
 ### 1. Prompt chaining (sequential)
 Step 1 → Step 2 → Step 3. Output of one feeds the next. Optional **gate** between steps validates before continuing.
@@ -52,7 +52,7 @@ LLM A produces an output. LLM B critiques it. A revises. Repeat until B says "go
 Use: legal drafting, code generation with strict tests, marketing copy.
 File: [`06_evaluator_optimizer.py`](06_evaluator_optimizer.py)
 
-## 7.3 The agent loop (true autonomy)
+## The agent loop (true autonomy)
 
 When workflows aren't enough, you give the model tools and let it loop:
 
@@ -76,7 +76,7 @@ File: [`07_react_agent.py`](07_react_agent.py)
 
 ---
 
-## 7.4 Picking a pattern — decision flow
+## Picking a pattern — decision flow
 
 ```
 Is the task strictly enumerable in steps?  ─► YES ─► Chain workflow
@@ -104,7 +104,7 @@ Truly open-ended?                          ─► YES ─► Autonomous agent (R
 
 ---
 
-## 7.5 Real-world scenario
+## Real-world scenario
 
 > **Document research agent.** A user asks: "What's the risk profile of vendor X based on our last 3 years of audit reports?"
 >
@@ -120,7 +120,7 @@ You build a compressed version in [`mini_project_research_agent.py`](mini_projec
 
 ---
 
-## 7.6 Hands-on files
+## Hands-on files
 
 | # | File | Pattern |
 |---|---|---|
@@ -135,6 +135,6 @@ You build a compressed version in [`mini_project_research_agent.py`](mini_projec
 
 ---
 
-## 7.7 Exercises & mini quiz → [`exercises.md`](exercises.md)
+## Exercises & mini quiz → [`exercises.md`](exercises.md)
 
 Next → [Domain 2a: Tool Use (function calling)](../Domain2_ToolDesign_MCP_18pct/tool_use/README.md)

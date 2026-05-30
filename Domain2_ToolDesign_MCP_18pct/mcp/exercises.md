@@ -1,5 +1,3 @@
-# Phase 6 — Exercises
-
 1. Modify `02_mcp_server.py` to also expose a **subscribable resource** (`policy://*`) that emits an `updated` notification when the file changes.
 2. Add an `is_error: True` path to a tool when invalid input arrives — and watch Claude correct itself in `04_bridge_mcp_to_claude.py`.
 3. Wire `mini_project_soc_mcp.py` into Claude Desktop by editing `%APPDATA%\Claude\claude_desktop_config.json`. Confirm the tools appear in Claude Desktop.

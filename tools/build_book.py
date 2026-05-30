@@ -124,18 +124,67 @@ def code_table(folder: Path, src_dir: str) -> list[str]:
     if not pys:
         return []
     out = [
-        "| # | Script | Plain-English lab guide |",
-        "|---|--------|--------------------------|",
+        "| # | Script | What it does | Plain-English lab guide |",
+        "|---|--------|--------------|--------------------------|",
     ]
     for i, py in enumerate(pys, 1):
         lab = py[:-3] + ".lab.md"
-        lab_cell = f"[`{lab}`]({src_dir}/{lab})" if (folder / lab).exists() else "&mdash;"
-        out.append(f"| {i} | [`{py}`]({src_dir}/{py}) | {lab_cell} |")
+        lab_full = folder / lab
+        lab_cell = f"[`{lab}`]({src_dir}/{lab})" if lab_full.exists() else "&mdash;"
+        summary = lab_one_liner(lab_full) or "&mdash;"
+        out.append(f"| {i} | [`{py}`]({src_dir}/{py}) | {summary} | {lab_cell} |")
     return out
 
 
+def lab_one_liner(lab_path: Path) -> str:
+    if not lab_path.exists():
+        return ""
+    text = lab_path.read_text(encoding="utf-8")
+    m = re.search(r"^##\s+What this script does\s*\n+([^\n#][^\n]*)",
+                  text, re.MULTILINE)
+    if not m:
+        return ""
+    return re.sub(r"\s+", " ", m.group(1)).strip().replace("|", "\\|")
+
+
+_README_TITLE_RE = re.compile(r"^#\s+(.+?)\s*$", re.MULTILINE)
+
+
+def strip_duplicate_readme_h1(text: str, chapter_title: str) -> str:
+    m = _README_TITLE_RE.match(text)
+    if not m:
+        return text
+    readme_title = m.group(1).strip()
+    chap_words = re.sub(r"[^\w\s]", " ", chapter_title).lower().split()
+    readme_words = re.sub(r"[^\w\s]", " ", readme_title).lower().split()
+    overlap = len(set(chap_words) & set(readme_words))
+    if overlap >= max(2, len(readme_words) // 2):
+        rest = text[m.end():]
+        return rest.lstrip("\n")
+    return text
+
+
+def number_top_sections(text: str, chapter_no: str, min_level: int = 2) -> str:
+    out: list[str] = []
+    in_fence = False
+    counter = 0
+    target = "#" * min_level + " "
+    for line in text.splitlines():
+        if line.lstrip().startswith("```"):
+            in_fence = not in_fence
+            out.append(line); continue
+        if not in_fence and line.startswith(target) and not line.startswith(target + "#"):
+            counter += 1
+            heading_text = line[len(target):].lstrip()
+            line = f"{target}{chapter_no}.{counter} {heading_text}"
+        out.append(line)
+    return "\n".join(out)
+
+
 def render_folder(parts: list[str], src_dir: str, heading_shift: int,
-                  named_subs: list[str] | None = None) -> None:
+                  named_subs: list[str] | None = None,
+                  chapter_no: str | None = None,
+                  chapter_title: str | None = None) -> None:
     folder = ROOT / src_dir
     if not folder.exists():
         return
@@ -143,13 +192,25 @@ def render_folder(parts: list[str], src_dir: str, heading_shift: int,
 
     readme = read(folder / "README.md")
     if readme:
-        parts.append(shift_headings(readme, heading_shift))
+        if chapter_title:
+            readme = strip_duplicate_readme_h1(readme, chapter_title)
+        shifted = shift_headings(readme, heading_shift)
+        if chapter_no:
+            shifted = number_top_sections(shifted, chapter_no,
+                                          min_level=2 + heading_shift)
+        parts.append(shifted)
 
     for fname in list_loose_md(folder):
         content = read(folder / fname)
         if not content:
             continue
-        pretty = Path(fname).stem.replace("_", " ").title()
+        h1_match = _README_TITLE_RE.match(content)
+        if h1_match:
+            pretty = h1_match.group(1).strip()
+            content = content[h1_match.end():].lstrip("\n")
+        else:
+            pretty = Path(fname).stem.replace("_", " ").title()
+            pretty = re.sub(r"^\d+\s+", "", pretty)
         parts.append(f"\n\n{'#' * (heading_shift + 1)} {pretty}\n")
         parts.append(shift_headings(content, heading_shift + 1))
 
@@ -161,6 +222,11 @@ def render_folder(parts: list[str], src_dir: str, heading_shift: int,
     table = code_table(folder, src_dir)
     if table:
         parts.append(f"\n\n{'#' * (heading_shift + 1)} Code samples & lab guides\n")
+        parts.append(
+            "Every runnable script ships with a sibling *plain-English lab guide* "
+            "(`.lab.md`) that explains it as if you're seeing the file for the "
+            "first time.\n"
+        )
         parts.extend(table)
 
     for sub in named_subs:
@@ -190,7 +256,8 @@ def build_chapter(no: str, parent_dir: str, title: str,
     section_anchor = f"chapter-{no}-{slugify(title)}"
     parts: list[str] = [f"\n\n<a id='{section_anchor}'></a>\n\n# Chapter {no}. {title}\n"]
     parts.append(f"> Source folder: [`{parent_dir}/`]({parent_dir}/README.md)\n")
-    render_folder(parts, parent_dir, heading_shift=1, named_subs=named_subs)
+    render_folder(parts, parent_dir, heading_shift=1, named_subs=named_subs,
+                  chapter_no=no, chapter_title=title)
     return "\n".join(parts)
 
 

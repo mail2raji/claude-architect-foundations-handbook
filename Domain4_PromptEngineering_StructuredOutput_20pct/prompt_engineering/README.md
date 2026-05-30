@@ -7,7 +7,7 @@
 
 ---
 
-## 3.1 The 10 prompting techniques you must know
+## The 10 prompting techniques you must know
 
 Anthropic teaches these as "the prompt engineering stack". Memorize the list — exam favorite.
 
@@ -58,7 +58,7 @@ Now produce the answer in <answer> tags.
 
 ---
 
-## 3.2 Chain-of-thought (CoT) — the single biggest reasoning lever
+## Chain-of-thought (CoT) — the single biggest reasoning lever
 
 Ask Claude to think before answering:
 
@@ -73,7 +73,7 @@ Then parse out `<answer>...</answer>`. This typically improves accuracy on multi
 
 ---
 
-## 3.3 Real-world scenario for prompting
+## Real-world scenario for prompting
 
 > **Compliance ticket classifier.** You must classify each ticket into one of: `SOX`, `GDPR`, `HIPAA`, `Other`.
 >
@@ -81,7 +81,7 @@ Then parse out `<answer>...</answer>`. This typically improves accuracy on multi
 
 ---
 
-## 3.4 Why evaluation matters
+## Why evaluation matters
 
 Prompts are software. Software needs tests. Without evals you have no idea if your "small tweak" to the prompt made the system better — or silently worse. **The Architect's responsibility is to set up evals before going to production.**
 
@@ -114,7 +114,7 @@ First explain in <thinking>, then output a single integer 1-5 in <score>.
 
 ---
 
-## 3.5 Hands-on examples
+## Hands-on examples
 
 | # | File | Topic |
 |---|---|---|
@@ -129,11 +129,11 @@ Run them in order — they build on the same dataset.
 
 ---
 
-## 3.6 Exercises
+## Exercises
 
 See [`exercises.md`](exercises.md).
 
-## 3.7 Mini quiz
+## Mini quiz
 
 1. Which technique typically gives the biggest accuracy lift on a fixed prompt?
 2. Where should documents go in a long prompt: top or bottom?

@@ -7,7 +7,7 @@
 
 ---
 
-## 2.1 The Messages API in one diagram
+## The Messages API in one diagram
 
 ```
 ┌──────────────────────────────────────────────────────────────────┐
@@ -33,7 +33,7 @@ Three roles only: **`system`** (one, top-level), **`user`**, **`assistant`** —
 
 ---
 
-## 2.2 Hands-on examples (work through in order)
+## Hands-on examples (work through in order)
 
 | # | File | What you'll learn |
 |---|---|---|
@@ -49,7 +49,7 @@ Run them one at a time. Read the source first, predict the output, then run.
 
 ---
 
-## 2.3 Key concepts called out
+## Key concepts called out
 
 ### Roles & turn alternation
 `messages` must alternate user/assistant. You can't have two `user` messages in a row. You CAN merge them into one string if needed.
@@ -90,7 +90,7 @@ Two reliable techniques:
 
 ---
 
-## 2.4 Real-world scenario
+## Real-world scenario
 
 > **Build a "log triage" microservice.** Ops sends raw firewall + auth logs over HTTPS. Your service must return JSON `{severity, category, suggested_action}`.
 >
@@ -104,11 +104,11 @@ Two reliable techniques:
 
 ---
 
-## 2.5 Exercises
+## Exercises
 
 See [`exercises.md`](exercises.md).
 
-## 2.6 Mini quiz (answer mentally before peeking)
+## Mini quiz (answer mentally before peeking)
 
 1. What are the three valid roles in `messages`?
 2. Why must `messages` end with a `user` turn?

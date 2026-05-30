@@ -7,7 +7,7 @@
 
 ---
 
-## 6.1 Why MCP exists
+## Why MCP exists
 
 Imagine you've built five Claude apps. Each one needs a `search_jira` tool, a `read_sharepoint` tool, etc. You're now re-implementing the same tool wrappers in every app. MCP standardizes that:
 
@@ -18,7 +18,7 @@ Now every Claude app you write can plug in any MCP server in seconds. Think of M
 
 ---
 
-## 6.2 The three MCP primitives
+## The three MCP primitives
 
 This is **the** exam question of Phase 6. Memorize.
 
@@ -32,7 +32,7 @@ Mnemonic: **T**ool = model. **R**esource = app/user. **P**rompt = user.
 
 ---
 
-## 6.3 Architecture in one diagram
+## Architecture in one diagram
 
 ```
 ┌────────────────┐     stdio / HTTP+SSE     ┌──────────────────────┐
@@ -54,7 +54,7 @@ Two transports you must know:
 
 ---
 
-## 6.4 Minimum viable Python MCP server
+## Minimum viable Python MCP server
 
 Anthropic's `mcp` Python SDK uses `FastMCP`:
 
@@ -85,7 +85,7 @@ That's a complete MCP server. You can hand the file to a friend, they add it to 
 
 ---
 
-## 6.5 Connecting Claude Desktop / Claude Code
+## Connecting Claude Desktop / Claude Code
 
 You add it to the client's config file:
 
@@ -105,7 +105,7 @@ Restart the client and the tool appears. Same JSON shape works in Claude Code.
 
 ---
 
-## 6.6 MCP client from scratch (when you build your own app)
+## MCP client from scratch (when you build your own app)
 
 Skip the desktop — talk to the server programmatically:
 
@@ -125,7 +125,7 @@ We implement this end-to-end in `03_mcp_client.py` and then **bridge it to Claud
 
 ---
 
-## 6.7 Real-world scenario
+## Real-world scenario
 
 > **A SOC analyst chatbot** that should be able to:
 > - Query Sentinel via KQL (a `query_sentinel(kql)` tool)
@@ -136,7 +136,7 @@ We implement this end-to-end in `03_mcp_client.py` and then **bridge it to Claud
 
 ---
 
-## 6.8 Hands-on examples
+## Hands-on examples
 
 | # | File | Topic |
 |---|---|---|
@@ -158,6 +158,6 @@ python Domain2_ToolDesign_MCP_18pct/mcp/04_bridge_mcp_to_claude.py
 
 ---
 
-## 6.9 Exercises & mini quiz → [`exercises.md`](exercises.md)
+## Exercises & mini quiz → [`exercises.md`](exercises.md)
 
 Next → [Domain 3: Claude Code Configuration & Workflows](../../Domain3_ClaudeCode_Workflows_20pct/README.md)

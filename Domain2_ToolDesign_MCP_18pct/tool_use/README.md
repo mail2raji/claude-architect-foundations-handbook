@@ -7,7 +7,7 @@
 
 ---
 
-## 4.1 What is "tool use"?
+## What is "tool use"?
 
 Tools (a.k.a. **function calling**) let Claude **request** that your code run a function on its behalf. Claude never executes anything itself — it just *asks*, you run the code, and you give the result back. The loop:
 
@@ -32,7 +32,7 @@ That little loop is the foundation of **every agent** you will build in Phase 7.
 
 ---
 
-## 4.2 The tool definition shape
+## The tool definition shape
 
 A tool is a JSON object with three fields:
 
@@ -55,7 +55,7 @@ A tool is a JSON object with three fields:
 
 ---
 
-## 4.3 `tool_choice` modes (exam favorite)
+## `tool_choice` modes (exam favorite)
 
 ```python
 tool_choice = {"type": "auto"}      # default — model decides
@@ -66,7 +66,7 @@ tool_choice = {"type": "none"}      # text-only, no tools
 
 ---
 
-## 4.4 Built-in vs custom tools
+## Built-in vs custom tools
 
 Anthropic provides **server-side tools** you can enable with one line — Claude runs them inside Anthropic's infra:
 
@@ -81,13 +81,13 @@ You can mix built-in and custom tools in the same call.
 
 ---
 
-## 4.5 Parallel tool use & batch tool use
+## Parallel tool use & batch tool use
 
 Modern Claude can request **multiple tool calls in one response** (`content` has several `tool_use` blocks). The runner should execute them in parallel and return all `tool_result` blocks in the next user turn. Saves latency.
 
 ---
 
-## 4.6 Real-world scenario
+## Real-world scenario
 
 > **IT-triage agent.** A helpdesk ticket comes in. The agent has 3 tools:
 > 1. `get_user_info(employee_id)` — looks up department, manager, location.
@@ -100,7 +100,7 @@ This is one short step away from a full Phase-7 ReAct agent.
 
 ---
 
-## 4.7 Hands-on examples
+## Hands-on examples
 
 | # | File | Topic |
 |---|---|---|
@@ -112,7 +112,7 @@ This is one short step away from a full Phase-7 ReAct agent.
 
 ---
 
-## 4.8 Common pitfalls
+## Common pitfalls
 
 | Pitfall | Fix |
 |---|---|
@@ -123,6 +123,6 @@ This is one short step away from a full Phase-7 ReAct agent.
 
 ---
 
-## 4.9 Exercises & mini quiz → [`exercises.md`](exercises.md)
+## Exercises & mini quiz → [`exercises.md`](exercises.md)
 
 Next → [Domain 2b: Model Context Protocol (MCP)](../mcp/README.md)

@@ -7,7 +7,7 @@
 
 ---
 
-## 5.1 Why RAG?
+## Why RAG?
 
 Claude has two big limitations for company-specific Q&A:
 1. **It doesn't know your internal docs.** They aren't in the training set.
@@ -26,7 +26,7 @@ You retrieve only the **few most relevant chunks** and put them into the prompt.
 
 ---
 
-## 5.2 The RAG pipeline — five stages
+## The RAG pipeline — five stages
 
 | Stage | Job | Tooling |
 |---|---|---|
@@ -40,7 +40,7 @@ You'll build all five in `01_chunking.py` → `04_reranking.py`.
 
 ---
 
-## 5.3 Critical concepts the exam tests
+## Critical concepts the exam tests
 
 ### Chunking strategies
 - **Fixed-size**: simplest, every chunk N chars.
@@ -63,7 +63,7 @@ Before embedding/BM25-indexing a chunk, **prefix the chunk with a 1-paragraph Cl
 
 ---
 
-## 5.4 Anti-patterns (exam favorites)
+## Anti-patterns (exam favorites)
 
 | Anti-pattern | Why it's bad | Fix |
 |---|---|---|
@@ -76,7 +76,7 @@ Before embedding/BM25-indexing a chunk, **prefix the chunk with a 1-paragraph Cl
 
 ---
 
-## 5.5 Real-world scenario
+## Real-world scenario
 
 > **Internal IT KB chatbot.** 300 markdown KB articles. Employees ask "how do I reset MFA on a lost phone?" The bot must:
 > - Retrieve relevant articles (hybrid)
@@ -88,7 +88,7 @@ Before embedding/BM25-indexing a chunk, **prefix the chunk with a 1-paragraph Cl
 
 ---
 
-## 5.6 Hands-on examples
+## Hands-on examples
 
 | # | File | Topic |
 |---|---|---|
@@ -103,6 +103,6 @@ Before embedding/BM25-indexing a chunk, **prefix the chunk with a 1-paragraph Cl
 
 ---
 
-## 5.7 Exercises & mini quiz → [`exercises.md`](exercises.md)
+## Exercises & mini quiz → [`exercises.md`](exercises.md)
 
 Next → drill the exam-prep material per domain. Start with the heaviest: [Domain1_AgentArchitecture_27pct/exam_prep/](../Domain1_AgentArchitecture_27pct/exam_prep/).

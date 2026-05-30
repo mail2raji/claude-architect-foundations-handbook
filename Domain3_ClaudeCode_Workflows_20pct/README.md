@@ -9,7 +9,7 @@ This phase is shorter — the exam tests **concepts**, not coding from scratch.
 
 ---
 
-## 8.1 Claude Code
+## Claude Code
 
 **What it is:** An Anthropic-built terminal CLI that runs Claude as an autonomous coding agent on your local machine.
 
@@ -37,7 +37,7 @@ This phase is shorter — the exam tests **concepts**, not coding from scratch.
 
 ---
 
-## 8.2 Computer Use
+## Computer Use
 
 **What it is:** A *tool* (`computer_use`) that lets Claude control a virtual machine's **mouse, keyboard, and screen**. Claude sees screenshots, decides clicks, types, and submits.
 
@@ -69,7 +69,7 @@ You provide the VM and a thin executor. Anthropic provides the model and the too
 
 ---
 
-## 8.3 Hands-on (light)
+## Hands-on (light)
 
 No runnable code in this phase — those tools require a VM (Computer Use) or a CLI install (Claude Code). Instead:
 
@@ -78,7 +78,7 @@ No runnable code in this phase — those tools require a VM (Computer Use) or a 
 
 ---
 
-## 8.4 Exam tips
+## Exam tips
 
 - Claude Code = local terminal agent.
 - Computer Use = mouse/keyboard tool — **sandbox** required.
